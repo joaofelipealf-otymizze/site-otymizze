@@ -420,36 +420,35 @@ function restart(){
 }
 
 function formatLeadDate(item) {
-  // Procura a chave de data em qualquer variação possível do D1/API
   const raw = item.created_at || item.createdAt || item.date || item.created || item.timestamp;
   if (!raw) return 'Sem data';
 
-  const str = String(raw).trim();
+  let str = String(raw).trim();
   if (!str) return 'Sem data';
 
-  // 1. Formato "22/07/2026, 06:06:56" ou "22/07/2026 06:06:56"
-  if (str.includes('/')) {
-    const parts = str.split(/[\s,]+/);
-    const dataPart = parts[0];
-    const horaPart = parts[1] ? parts[1].substring(0, 5) : '';
-    return horaPart ? `${dataPart} às ${horaPart}` : dataPart;
-  }
-
-  // 2. Formato ISO ou SQL "2026-07-22 05:30:25" / "2026-07-22T05:30:25.000Z"
-  if (str.includes('-')) {
-    const cleanStr = str.replace('T', ' ');
-    const parts = cleanStr.split(' ');
-    const dateParts = parts[0].split('-');
-    const timeParts = (parts[1] || '').split(':');
-
-    if (dateParts.length === 3) {
-      const dia = dateParts[2].substring(0, 2);
-      const mes = dateParts[1];
-      const ano = dateParts[0];
-      const hora = timeParts[0] || '00';
-      const min = timeParts[1] || '00';
-      return `${dia}/${mes}/${ano} às ${hora}:${min}`;
+  try {
+    // Garante interpretação do fuso horário UTC vindo do SQLite/D1
+    let isoString = str;
+    if (str.includes(' ')) {
+      isoString = str.replace(' ', 'T') + 'Z';
+    } else if (!str.endsWith('Z') && !str.includes('+')) {
+      isoString = str + 'Z';
     }
+
+    const dateObj = new Date(isoString);
+    if (!isNaN(dateObj.getTime())) {
+      // Converte rigorosamente para o fuso local da Paraíba (America/Fortaleza)
+      return dateObj.toLocaleString('pt-BR', {
+        timeZone: 'America/Fortaleza',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }).replace(',', ' às');
+    }
+  } catch (e) {
+    // Se falhar a conversão de objeto, segue pro tratamento direto de string
   }
 
   return str;
