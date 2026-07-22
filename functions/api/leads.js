@@ -20,14 +20,12 @@ export async function onRequestPost(context) {
     return Response.json({ error: "Dados inválidos." }, { status: 400 });
   }
 
-  // Gera o timestamp ISO atual para garantir que nunca fique nulo no D1
-  const now = new Date().toISOString();
-
+  // Insere usando a função de data do próprio SQLite (D1)
   const result = await env.DB
     .prepare(
-      "INSERT INTO leads (name, phone, score, plan, created_at) VALUES (?, ?, ?, ?, ?) RETURNING *"
+      "INSERT INTO leads (name, phone, score, plan, created_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP) RETURNING *"
     )
-    .bind(name, phone, score, plan, now)
+    .bind(name, phone, score, plan)
     .first();
 
   return Response.json(result, { status: 201 });
@@ -43,28 +41,11 @@ export async function onRequestGet(context) {
     return Response.json({ error: "Código incorreto." }, { status: 401 });
   }
 
+  // Traz os dados puros diretamente da tabela do D1
   const { results } = await env.DB
     .prepare("SELECT * FROM leads ORDER BY id DESC")
     .all();
 
-  const formatted = results.map((row) => {
-    let formattedDate = "Sem data";
-    
-    if (row.created_at) {
-      const parsed = new Date(row.created_at);
-      if (!isNaN(parsed.getTime())) {
-        formattedDate = parsed.toLocaleString("pt-BR", { timeZone: "America/Fortaleza" });
-      } else {
-        formattedDate = row.created_at;
-      }
-    }
-
-    return {
-      ...row,
-      createdAt: formattedDate,
-      created_at: formattedDate
-    };
-  });
-
-  return Response.json(formatted);
+  // Envia diretamente os objetos sem forçar conversão quebrando a Date no iOS
+  return Response.json(results);
 }
