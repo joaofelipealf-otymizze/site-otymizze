@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Otymizze — Descubra o plano ideal pro seu negócio</title>
+<meta name="description" content="Responda 5 perguntas rápidas e descubra qual plano da Otymizze faz sentido pro seu negócio agora.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal:#0a0a0a;
+    --charcoal-2:#1a1a1a;
+    --off-white:#f5f3ee;
+    --off-white-2:#f5f3ee;
+    --gold:#b8912a;
+    --gold-soft:#e8c96d;
+    --ink:#f5f3ee;
+    --muted:#888888;
+    --muted-on-dark:#999999;
+    --line:rgba(184,145,42,0.2);
+
+    --error:#b5493b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--charcoal);
+    color:var(--off-white);
+    font-family:'Montserrat',sans-serif;
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;}
+  .stage{
+    width:100%;max-width:560px;
+    background:var(--charcoal-2);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:44px 36px;
+    position:relative;
+    overflow:hidden;
+  }
+  .stage::before{
+    content:"";position:absolute;top:-30%;right:-20%;
+    width:420px;height:420px;
+    background:radial-gradient(circle, rgba(201,162,39,0.08) 0%, transparent 70%);
+  }
+  .logo-mark{
+    font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;
+    letter-spacing:0.08em;color:var(--gold-soft);text-align:center;margin-bottom:28px;
+    position:relative;z-index:1;
+  }
+  .progress-wrap{display:flex;gap:6px;margin-bottom:32px;position:relative;z-index:1;}
+  .progress-seg{flex:1;height:3px;background:rgba(246,242,232,0.12);border-radius:2px;overflow:hidden;}
+  .progress-seg.done{background:var(--gold);}
+  .screen{display:none;position:relative;z-index:1;}
+  .screen.active{display:block;animation:fade .35s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+  .eyebrow{color:var(--gold-soft);font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin-bottom:14px;}
+  h2{font-size:1.55rem;font-weight:500;line-height:1.3;margin-bottom:8px;}
+  .sub{color:var(--muted-on-dark);font-size:0.9rem;margin-bottom:28px;line-height:1.55;}
+
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .opt{
+    text-align:left;background:rgba(246,242,232,0.04);
+    border:1px solid rgba(246,242,232,0.12);
+    color:var(--off-white);
+    padding:16px 18px;border-radius:5px;font-size:0.92rem;
+    cursor:pointer;transition:all .18s;font-family:'Montserrat',sans-serif;
+  }
+  .opt:hover{border-color:var(--gold);background:rgba(201,162,39,0.08);}
+  .opt.selected{border-color:var(--gold);background:rgba(201,162,39,0.14);}
+
+  .nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:28px;}
+  .btn-back{color:var(--muted-on-dark);font-size:0.85rem;background:none;border:none;cursor:pointer;}
+  .btn-back:hover{color:var(--gold-soft);}
+  .btn-primary{
+    background:var(--gold);color:var(--charcoal);border:none;
+    padding:14px 30px;border-radius:5px;font-weight:600;font-size:0.88rem;
+    letter-spacing:0.02em;cursor:pointer;transition:background .2s;font-family:'Montserrat',sans-serif;
+  }
+  .btn-primary:hover{background:var(--gold-soft);}
+  .btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+  .btn-primary.full{width:100%;}
+
+  form label{display:block;font-size:0.8rem;color:var(--muted-on-dark);margin-bottom:6px;margin-top:16px;}
+  form label:first-child{margin-top:0;}
+  input[type=text],input[type=tel]{
+    width:100%;background:rgba(246,242,232,0.05);
+    border:1px solid rgba(246,242,232,0.15);
+    color:var(--off-white);padding:13px 14px;border-radius:5px;
+    font-size:0.95rem;font-family:'Montserrat',sans-serif;
+  }
+  input:focus{outline:none;border-color:var(--gold);}
+  .field-error{color:var(--error);font-size:0.78rem;margin-top:6px;display:none;}
+
+  /* RESULT */
+  .result-badge{
+    display:inline-block;background:var(--gold);color:var(--charcoal);
+    font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+    padding:5px 14px;border-radius:20px;margin-bottom:16px;
+  }
+  .result-plan{font-size:2.1rem;font-weight:600;margin-bottom:6px;}
+  .result-tag{color:var(--muted-on-dark);font-size:0.92rem;margin-bottom:20px;line-height:1.55;}
+  .result-price{display:flex;align-items:baseline;gap:6px;margin-bottom:24px;}
+  .result-price .amount{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:600;color:var(--gold-soft);}
+  .result-price .period{color:var(--muted);font-size:0.85rem;}
+  .result-features{list-style:none;margin-bottom:28px;}
+  .result-features li{font-size:0.87rem;color:var(--off-white);margin-bottom:10px;padding-left:20px;position:relative;line-height:1.45;}
+  .result-features li::before{content:"✓";position:absolute;left:0;color:var(--gold);font-weight:700;}
+  .bonus-note{
+    background:rgba(201,162,39,0.08);border:1px dashed var(--gold);
+    border-radius:5px;padding:12px 14px;margin-bottom:20px;
+    font-size:0.82rem;line-height:1.5;color:var(--off-white);
+  }
+  .bonus-note strong{color:var(--gold-soft);}
+  .btn-whatsapp{
+    display:block;text-align:center;background:#25D366;color:#0a2818;
+    padding:15px;border-radius:5px;font-weight:700;font-size:0.9rem;
+    margin-bottom:10px;text-decoration:none;
+  }
+  .restart{text-align:center;margin-top:14px;}
+  .restart a{color:var(--muted-on-dark);font-size:0.8rem;text-decoration:underline;cursor:pointer;}
+
+  .plans-link{text-align:center;margin-top:8px;}
+  .plans-link a{color:var(--muted-on-dark);font-size:0.78rem;text-decoration:underline;}
+
+  .trial-block{
+    margin-top:6px;margin-bottom:22px;padding:18px 20px;
+    background:rgba(201,162,39,0.07);border:1px dashed var(--gold);border-radius:6px;
+  }
+  .trial-block .trial-eyebrow{color:var(--gold-soft);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;margin-bottom:8px;}
+  .trial-block p{font-size:0.83rem;color:var(--muted-on-dark);line-height:1.5;margin-bottom:12px;}
+  .trial-block .trial-cta-line{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .trial-block .trial-amount{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--off-white);}
+  .trial-block .btn-trial{
+    background:var(--gold);color:var(--charcoal);padding:10px 18px;border-radius:4px;
+    font-size:0.8rem;font-weight:700;text-decoration:none;white-space:nowrap;
+  }
+
+  .admin-link{position:fixed;bottom:14px;right:16px;font-size:0.68rem;color:rgba(246,242,232,0.25);text-decoration:none;z-index:5;}
+  .admin-box{background:var(--off-white-2);color:#1a1712;border-radius:6px;padding:20px;margin-top:16px;}
+  .admin-box textarea{width:100%;min-height:140px;font-family:monospace;font-size:0.78rem;padding:10px;border-radius:4px;border:1px solid rgba(0,0,0,0.15);margin-top:10px;color:#1a1712;}
+</style>
+</head>
+<body>
+
+<a class="admin-link" href="#" onclick="openAdmin();return false;">admin</a>
+
+<div class="stage">
+  <div class="logo-mark">OTYMIZZE · DIAGNÓSTICO</div>
+  <div class="progress-wrap" id="progressWrap"></div>
+
+  <!-- INTRO -->
+  <div class="screen active" data-screen="intro">
+    <span class="eyebrow">Leva 1 minuto</span>
+    <h2>Descubra qual plano faz sentido pro seu negócio agora.</h2>
+    <p class="sub">5 perguntas rápidas. No final, você vê exatamente o que recomendamos — e o valor.</p>
+    <button class="btn-primary full" onclick="goTo(1)">Começar diagnóstico</button>
+  </div>
+
+  <!-- QUESTIONS injected by JS -->
+  <div id="questionsHost"></div>
+
+  <!-- LEAD CAPTURE -->
+  <div class="screen" data-screen="lead">
+    <span class="eyebrow">Quase lá</span>
+    <h2>Pra onde enviamos seu resultado?</h2>
+    <p class="sub">Só usamos isso pra te mandar o diagnóstico e, se fizer sentido, marcar uma conversa.</p>
+    <form onsubmit="submitLead(event)">
+      <label>Seu nome</label>
+      <input type="text" id="leadName" placeholder="Nome completo" required>
+      <label>WhatsApp</label>
+      <input type="tel" id="leadPhone" placeholder="(83) 9 9999-9999" required>
+      <div class="field-error" id="leadError">Preencha nome e WhatsApp pra continuar.</div>
+      <div class="nav-row">
+        <button type="button" class="btn-back" onclick="goTo(5)">← Voltar</button>
+        <button type="submit" class="btn-primary" id="leadSubmitBtn">Ver meu resultado</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- RESULT -->
+  <div class="screen" data-screen="result">
+    <span class="result-badge" id="resultBadge">Recomendado pra você</span>
+    <div class="result-plan" id="resultPlan"></div>
+    <div class="result-tag" id="resultTag"></div>
+    <div class="result-price"><span>R$</span><span class="amount" id="resultAmount"></span><span class="period">/mês</span></div>
+    <ul class="result-features" id="resultFeatures"></ul>
+
+    <div class="bonus-note"><strong>Bônus:</strong> ao contratar, você ganha uma reunião visionária exclusiva pro seu negócio — um olhar que a maioria dos donos de negócio nunca teve sobre o próprio negócio.</div>
+
+    <div class="trial-block" id="trialBlock" style="display:none;">
+      <div class="trial-eyebrow">Condição de lançamento · vagas limitadas</div>
+      <p>Prefere testar antes? 30 dias de execução por um valor de entrada. Depois, migra automaticamente pro Plano Presença (R$890/mês) — ou você encerra, sem burocracia. Válida até 31/08/2026 ou enquanto houver vaga.</p>
+      <div class="trial-cta-line">
+        <span class="trial-amount">R$ 490</span>
+        <a class="btn-trial" id="trialWhatsapp" href="#" target="_blank">Quero essa condição</a>
+      </div>
+    </div>
+
+    <a class="btn-whatsapp" id="resultWhatsapp" href="#" target="_blank">Falar com a equipe no WhatsApp</a>
+    <div class="restart"><a onclick="restart()">Refazer diagnóstico</a></div>
+    <div class="plans-link"><a href="index.html">Voltar ao site</a></div>
+  </div>
+
+  <!-- ADMIN -->
+  <div class="screen" data-screen="admin">
+    <span class="eyebrow">Área interna</span>
+    <h2>Leads capturados</h2>
+    <p class="sub">Lista salva no banco de dados do site — disponível em qualquer aba ou dispositivo, mesmo depois de atualizar a página.</p>
+    <div class="admin-box">
+      <button class="btn-primary" onclick="copyLeads()">Copiar lista</button>
+      <textarea id="leadsOutput" readonly>Carregando…</textarea>
+    </div>
+    <div class="restart"><a onclick="restart()">Voltar ao início</a></div>
+  </div>
+
+</div>
+
+<script>
+const WHATSAPP_NUMBER = "5583988444454";
+const LEADS_API = "/api/leads";
+
+const QUESTIONS = [
+  {
+    text: "Quantas vezes por semana você posta no Instagram hoje?",
+    sub: "Seja sincero — isso só ajusta a recomendação.",
+    options: [
+      {label:"Quase nunca", score:0},
+      {label:"1 a 2 vezes", score:1},
+      {label:"3 a 5 vezes", score:2},
+      {label:"Todos os dias", score:3}
+    ]
+  },
+  {
+    text: "Quem cuida das redes sociais do seu negócio hoje?",
+    sub: "",
+    options: [
+      {label:"Ninguém, fica largado", score:0},
+      {label:"Eu mesmo, nas horas vagas", score:1},
+      {label:"Tenho ajuda ocasional", score:2},
+      {label:"Já tenho equipe ou agência", score:3}
+    ]
+  },
+  {
+    text: "Você já investiu em marketing antes?",
+    sub: "",
+    options: [
+      {label:"Nunca investi", score:0},
+      {label:"Já tentei e não deu certo", score:1},
+      {label:"Já invisto, mas sem estratégia clara", score:2},
+      {label:"Já invisto com resultado e quero crescer mais", score:3}
+    ]
+  },
+  {
+    text: "Qual seu maior objetivo agora?",
+    sub: "",
+    options: [
+      {label:"Parar de ser invisível / aparecer mais", score:0},
+      {label:"Vender mais pelo Instagram", score:2},
+      {label:"Ser a referência do meu setor na região", score:3}
+    ]
+  },
+  {
+    text: "Quanto seu negócio consegue investir em marketing por mês, hoje?",
+    sub: "",
+    options: [
+      {label:"Até R$ 1.000", score:0},
+      {label:"Entre R$ 1.000 e R$ 2.000", score:2},
+      {label:"Acima de R$ 2.000", score:3}
+    ]
+  }
+];
+
+const PLANS = {
+  presenca: {
+    name:"Plano Presença", amount:"890",
+    tag:"Pra parar de ser invisível nas redes e começar a aparecer com consistência.",
+    features:["12 conteúdos prontos por mês","Visita a cada 15 dias","Resumo mensal simples de resultado"]
+  },
+  crescimento: {
+    name:"Plano Crescimento", amount:"1.790",
+    tag:"Pra sair do genérico e fazer as redes gerarem venda de verdade.",
+    features:["20 conteúdos prontos por mês","Visita semanal","Plano estratégico a cada 3 meses","Diagnóstico de funil de vendas"]
+  },
+  autoridade: {
+    name:"Plano Autoridade", amount:"2.990",
+    tag:"Pra ser a marca que todo mundo lembra primeiro, na região.",
+    features:["Conteúdo publicado todos os dias","4 visitas por mês","Posicionamento com técnicas de decisão de compra","Suporte ao vivo em eventos"]
+  }
+};
+
+let answers = [];
+
+function buildProgress(){
+  const wrap = document.getElementById('progressWrap');
+  wrap.innerHTML = '';
+  for(let i=0;i<QUESTIONS.length;i++){
+    const seg = document.createElement('div');
+    seg.className = 'progress-seg';
+    seg.id = 'seg-'+i;
+    wrap.appendChild(seg);
+  }
+}
+
+function buildQuestions(){
+  const host = document.getElementById('questionsHost');
+  QUESTIONS.forEach((q, idx) => {
+    const div = document.createElement('div');
+    div.className = 'screen';
+    div.dataset.screen = 'q'+idx;
+    let optsHtml = q.options.map((o,oi) =>
+      `<button type="button" class="opt" data-score="${o.score}" onclick="selectOption(${idx}, ${oi}, ${o.score}, this)">${o.label}</button>`
+    ).join('');
+    div.innerHTML = `
+      <span class="eyebrow">Pergunta ${idx+1} de ${QUESTIONS.length}</span>
+      <h2>${q.text}</h2>
+      ${q.sub ? `<p class="sub">${q.sub}</p>` : '<div style="margin-bottom:24px;"></div>'}
+      <div class="options">${optsHtml}</div>
+      <div class="nav-row">
+        <button class="btn-back" onclick="goTo(${idx})">← Voltar</button>
+        <span></span>
+      </div>
+    `;
+    host.appendChild(div);
+  });
+}
+
+function selectOption(qIdx, optIdx, score, el){
+  const parent = el.parentElement;
+  [...parent.children].forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[qIdx] = score;
+  document.getElementById('seg-'+qIdx).classList.add('done');
+  setTimeout(() => goTo(qIdx+2), 250);
+}
+
+function goTo(screenIndex){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  if(screenIndex === 0){
+    document.querySelector('[data-screen="intro"]').classList.add('active');
+  } else if(screenIndex >= 1 && screenIndex <= QUESTIONS.length){
+    document.querySelector('[data-screen="q'+(screenIndex-1)+'"]').classList.add('active');
+  } else if(screenIndex === QUESTIONS.length+1){
+    document.querySelector('[data-screen="lead"]').classList.add('active');
+  }
+}
+
+async function submitLead(e){
+  e.preventDefault();
+  const name = document.getElementById('leadName').value.trim();
+  const phone = document.getElementById('leadPhone').value.trim();
+  if(!name || !phone){
+    document.getElementById('leadError').style.display = 'block';
+    return;
+  }
+  document.getElementById('leadError').style.display = 'none';
+
+  const total = answers.reduce((a,b) => a+(b||0), 0);
+  let planKey;
+  if(total <= 5) planKey = 'presenca';
+  else if(total <= 10) planKey = 'crescimento';
+  else planKey = 'autoridade';
+
+  const btn = document.getElementById('leadSubmitBtn');
+  btn.disabled = true;
+
+  try {
+    await fetch(LEADS_API, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({name, phone, score: total, plan: PLANS[planKey].name})
+    });
+  } catch(err) {
+    // Ainda mostramos o resultado mesmo se o registro do lead falhar.
+  } finally {
+    btn.disabled = false;
+  }
+
+  showResult(planKey, name);
+}
+
+function showResult(planKey, name){
+  const plan = PLANS[planKey];
+  document.getElementById('resultPlan').textContent = plan.name;
+  document.getElementById('resultTag').textContent = plan.tag;
+  document.getElementById('resultAmount').textContent = plan.amount;
+  const featEl = document.getElementById('resultFeatures');
+  featEl.innerHTML = plan.features.map(f => `<li>${f}</li>`).join('');
+
+  const msg = encodeURIComponent(`Olá! Sou ${name}, fiz o diagnóstico da Otymizze e o resultado indicou o ${plan.name} (R$${plan.amount}/mês). Quero conversar!`);
+  document.getElementById('resultWhatsapp').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+
+  const trialBlock = document.getElementById('trialBlock');
+  if(planKey === 'presenca'){
+    trialBlock.style.display = 'block';
+    const trialMsg = encodeURIComponent(`Olá! Sou ${name}, fiz o diagnóstico da Otymizze e quero saber mais sobre a condição de lançamento de R$490 (30 dias).`);
+    document.getElementById('trialWhatsapp').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${trialMsg}`;
+  } else {
+    trialBlock.style.display = 'none';
+  }
+
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelector('[data-screen="result"]').classList.add('active');
+}
+
+function restart(){
+  answers = [];
+  document.querySelectorAll('.opt.selected').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('.progress-seg').forEach(s => s.classList.remove('done'));
+  document.getElementById('leadName').value = '';
+  document.getElementById('leadPhone').value = '';
+  document.getElementById('leadError').style.display = 'none';
+  goTo(0);
+}
+
+async function openAdmin(){
+  const code = prompt("Código de acesso:");
+  if(code === null) return;
+
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelector('[data-screen="admin"]').classList.add('active');
+  const out = document.getElementById('leadsOutput');
+  out.value = 'Carregando…';
+
+  try {
+    const res = await fetch(`${LEADS_API}?code=${encodeURIComponent(code)}`);
+    if(res.status === 401){
+      out.value = 'Código incorreto.';
+      return;
+    }
+    if(!res.ok) throw new Error('Falha ao carregar leads');
+    const leads = await res.json();
+    out.value = leads.length
+      ? leads.map(l => `${l.createdAt} | ${l.name} | ${l.phone} | ${l.plan} (score ${l.score})`).join('\n')
+      : 'Nenhum lead capturado ainda.';
+  } catch(err) {
+    out.value = 'Erro ao carregar leads. Tente novamente.';
+  }
+}
+
+function copyLeads(){
+  const ta = document.getElementById('leadsOutput');
+  ta.select();
+  document.execCommand('copy');
+  alert('Lista copiada!');
+}
+
+buildProgress();
+buildQuestions();
+</script>
+
+</body>
+</html>

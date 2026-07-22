@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Otymizze — Assessoria Empresarial com foco em Marketing para pequenos negócios locais. Estratégia, gestão de redes sociais, branding e conteúdo que geram resultado real.">
+  <meta name="keywords" content="marketing digital, assessoria empresarial, marketing digital, redes sociais, branding, Paraíba, Solânea, pequenos negócios">
+  <meta property="og:title" content="Otymizze — Marketing Digital que Converte">
+  <meta property="og:description" content="Transformamos presença digital de pequenos negócios em resultado concreto. Diagnóstico gratuito.">
+  <meta property="og:type" content="website">
+  <title>Otymizze — Marketing Digital que Converte</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --black:#0a0a0a;
+      --offwhite:#f5f3ee;
+      --gold:#b8912a;
+      --gold-light:#e8c96d;
+      --gray:#1a1a1a;
+      --gray-mid:#2e2e2e;
+      --text-muted:#888;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--black);color:var(--offwhite);font-family:'Montserrat',sans-serif;font-size:15px;line-height:1.7;overflow-x:hidden}
+    h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif}
+    a{text-decoration:none;color:inherit}
+    .gold{color:var(--gold)}
+
+    /* BOTÕES */
+    .btn-primary{
+      display:inline-block;background:var(--gold);color:var(--black);
+      font-family:'Montserrat',sans-serif;font-weight:600;font-size:13px;
+      letter-spacing:0.08em;text-transform:uppercase;
+      padding:14px 32px;border:none;cursor:pointer;transition:background 0.2s;
+    }
+    .btn-primary:hover{background:var(--gold-light)}
+    .btn-outline{
+      display:inline-block;border:1px solid var(--gold);color:var(--gold);
+      font-family:'Montserrat',sans-serif;font-weight:500;font-size:13px;
+      letter-spacing:0.06em;text-transform:uppercase;
+      padding:13px 28px;transition:all 0.2s;
+    }
+    .btn-outline:hover{background:var(--gold);color:var(--black)}
+
+    /* NAV */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:20px 48px;
+      background:rgba(10,10,10,0.95);
+      border-bottom:1px solid rgba(184,145,42,0.15);
+      backdrop-filter:blur(8px);
+    }
+    .nav-logo img{height:40px;width:auto;display:block}
+    .nav-links{display:flex;gap:32px}
+    .nav-links a{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,243,238,0.7);transition:color 0.2s}
+    .nav-links a:hover{color:var(--gold)}
+    .nav-cta{
+      font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
+      background:var(--gold);color:var(--black);padding:10px 22px;
+      font-family:'Montserrat',sans-serif;font-weight:600;cursor:pointer;transition:background 0.2s;
+    }
+    .nav-cta:hover{background:var(--gold-light)}
+
+    /* SEÇÕES */
+    section{padding:100px 48px}
+    .container{max-width:1100px;margin:0 auto}
+
+    /* HERO */
+    .hero{
+      min-height:100vh;display:flex;align-items:center;
+      background:var(--black);padding-top:140px;padding-bottom:80px;
+      border-bottom:1px solid rgba(184,145,42,0.12);
+    }
+    .hero-inner{max-width:1100px;margin:0 auto;width:100%}
+    .hero-eyebrow{
+      font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);
+      display:flex;align-items:center;gap:12px;margin-bottom:28px;
+    }
+    .hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
+    .hero h1{font-size:clamp(48px,7vw,88px);font-weight:400;line-height:1.05;max-width:900px;margin-bottom:28px}
+    .hero h1 em{font-style:italic;color:var(--gold)}
+    .hero-sub{font-size:16px;color:rgba(245,243,238,0.65);max-width:500px;margin-bottom:44px;line-height:1.8}
+    .hero-ctas{display:flex;gap:16px;flex-wrap:wrap}
+    .hero-stats{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+      margin-top:80px;border-top:1px solid rgba(184,145,42,0.15);
+    }
+    .hero-stat{padding:32px 0 0}
+    .hero-stat-num{font-family:'Cormorant Garamond',serif;font-size:44px;color:var(--gold);line-height:1}
+    .hero-stat-label{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,243,238,0.5);margin-top:8px}
+
+    /* CABEÇALHOS DE SEÇÃO */
+    .section-eyebrow{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+    .section-eyebrow::before{content:'';width:24px;height:1px;background:var(--gold)}
+    .section-title{font-size:clamp(32px,4vw,48px);font-weight:400;line-height:1.1;margin-bottom:16px}
+    .section-sub{color:rgba(245,243,238,0.55);max-width:480px;font-size:15px}
+    .section-header{margin-bottom:60px}
+
+    /* PROBLEMA */
+    .problem-section{background:var(--gray);border-top:1px solid rgba(184,145,42,0.1);border-bottom:1px solid rgba(184,145,42,0.1)}
+    .problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:rgba(184,145,42,0.1);border:1px solid rgba(184,145,42,0.1)}
+    .problem-item{background:var(--gray);padding:36px 28px}
+    .problem-item-icon{font-size:28px;color:var(--gold);margin-bottom:16px}
+    .problem-item h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;margin-bottom:10px}
+    .problem-item p{font-size:13px;color:rgba(245,243,238,0.55);line-height:1.8}
+
+    /* SERVIÇOS */
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+    .service-card{
+      border:1px solid rgba(184,145,42,0.15);padding:40px 32px;
+      transition:border-color 0.3s;position:relative;overflow:hidden;
+    }
+    .service-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--gold);transition:height 0.3s}
+    .service-card:hover{border-color:rgba(184,145,42,0.4)}
+    .service-card:hover::before{height:100%}
+    .service-num{font-family:'Cormorant Garamond',serif;font-size:48px;color:rgba(184,145,42,0.15);line-height:1;margin-bottom:20px}
+    .service-card h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:12px}
+    .service-card p{font-size:13px;color:rgba(245,243,238,0.55);line-height:1.8}
+    .service-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px}
+    .tag{font-size:11px;letter-spacing:0.06em;border:1px solid rgba(184,145,42,0.3);color:rgba(245,243,238,0.5);padding:4px 10px}
+
+    /* CASES */
+    .cases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:rgba(184,145,42,0.1)}
+    .case-card{background:var(--black);padding:40px 32px;border:1px solid transparent;transition:border-color 0.3s}
+    .case-card:hover{border-color:rgba(184,145,42,0.25)}
+    .case-tag{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+    .case-card h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin-bottom:8px}
+    .case-card p{font-size:13px;color:rgba(245,243,238,0.5);margin-bottom:24px;line-height:1.8}
+    .case-metric{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--gold-light);line-height:1}
+    .case-metric-label{font-size:11px;color:rgba(245,243,238,0.4);letter-spacing:0.08em;margin-top:4px}
+
+    /* PROCESSO */
+    .process-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;position:relative}
+    .process-step{padding:40px 32px;border:1px solid rgba(184,145,42,0.1);position:relative}
+    .process-step-num{font-family:'Cormorant Garamond',serif;font-size:60px;color:rgba(184,145,42,0.12);line-height:1;margin-bottom:16px}
+    .process-step h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;margin-bottom:10px}
+    .process-step p{font-size:13px;color:rgba(245,243,238,0.5);line-height:1.8}
+
+    /* SOBRE */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .about-text p{color:rgba(245,243,238,0.65);margin-bottom:20px;line-height:1.9}
+    .about-highlight{
+      border-left:2px solid var(--gold);padding-left:24px;
+      font-family:'Cormorant Garamond',serif;font-size:24px;font-style:italic;
+      color:var(--offwhite);line-height:1.5;margin:32px 0;
+    }
+    .about-creds{display:flex;flex-direction:column;gap:16px}
+    .cred-item{display:flex;align-items:flex-start;gap:16px;padding:20px;border:1px solid rgba(184,145,42,0.15)}
+    .cred-icon{color:var(--gold);font-size:20px;flex-shrink:0;margin-top:2px}
+    .cred-title{font-weight:600;font-size:14px;margin-bottom:4px}
+    .cred-desc{font-size:12px;color:rgba(245,243,238,0.5);line-height:1.7}
+
+    /* FAQ */
+    .faq-list{max-width:720px}
+    .faq-item{border-bottom:1px solid rgba(184,145,42,0.12);padding:28px 0}
+    .faq-q{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;margin-bottom:12px}
+    .faq-a{font-size:14px;color:rgba(245,243,238,0.55);line-height:1.9}
+
+    /* CTA FINAL */
+    .cta-section{
+      background:var(--gray);
+      border-top:1px solid rgba(184,145,42,0.2);
+      border-bottom:1px solid rgba(184,145,42,0.2);
+      text-align:center;padding:120px 48px;
+    }
+    .cta-section h2{font-size:clamp(36px,5vw,64px);font-weight:400;margin-bottom:16px;line-height:1.1}
+    .cta-section p{color:rgba(245,243,238,0.55);max-width:480px;margin:0 auto 44px;font-size:16px}
+    .cta-wpp{
+      display:inline-flex;align-items:center;gap:12px;
+      background:var(--gold);color:var(--black);
+      font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;
+      letter-spacing:0.08em;text-transform:uppercase;
+      padding:18px 40px;transition:background 0.2s;cursor:pointer;
+    }
+    .cta-wpp:hover{background:var(--gold-light)}
+
+    /* FOOTER */
+    footer{
+      padding:40px 48px;border-top:1px solid rgba(184,145,42,0.1);
+      display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+    }
+    .footer-logo img{height:32px;width:auto;display:block}
+    .footer-copy{font-size:12px;color:rgba(245,243,238,0.3);letter-spacing:0.05em}
+    .footer-links{display:flex;gap:24px}
+    .footer-link{font-size:12px;color:rgba(245,243,238,0.4);letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s}
+    .footer-link:hover{color:var(--gold)}
+
+    /* FLOAT WPP */
+    .wpp-float{
+      position:fixed;bottom:28px;right:28px;z-index:200;
+      background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:28px;cursor:pointer;
+      box-shadow:0 4px 20px rgba(37,211,102,0.35);
+      transition:transform 0.2s;
+    }
+    .wpp-float:hover{transform:scale(1.1)}
+
+    /* RESPONSIVO */
+    @media(max-width:900px){
+      .about-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:700px){
+      nav{padding:16px 20px}
+      .nav-links{display:none}
+      section{padding:72px 20px}
+      .hero{padding-top:120px;padding-left:20px;padding-right:20px}
+      footer{flex-direction:column;gap:16px;text-align:center;padding:32px 20px}
+      .hero-stats{grid-template-columns:1fr 1fr}
+      .cta-section{padding:80px 20px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVEGAÇÃO -->
+<nav>
+  <a href="#inicio" class="nav-logo"><img src="assets/logo.png" alt="Otymizze"></a>
+  <div class="nav-links">
+    <a href="#servicos">Serviços</a>
+    <a href="#cases">Cases</a>
+    <a href="#processo">Processo</a>
+    <a href="planos.html">Planos</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a class="nav-cta" href="https://wa.me/5583988444454?text=Olá,%20vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20a%20Otymizze" target="_blank" rel="noopener">Falar no WhatsApp</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-inner" style="padding:0 48px">
+    <div class="hero-eyebrow">Assessoria Empresarial com foco em Marketing</div>
+    <h1>Seu negócio local<br>merece <em>crescer de verdade</em><br>nas redes sociais.</h1>
+    <p class="hero-sub">A Otymizze transforma presença digital de pequenos negócios em resultados concretos — mais clientes, mais vendas, mais autoridade.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="diagnostico.html">Diagnóstico gratuito →</a>
+      <a class="btn-outline" href="#cases">Ver resultados</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">+3M</div>
+        <div class="hero-stat-label">Impressões geradas</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">+R$100K</div>
+        <div class="hero-stat-label">De aumento no faturamento dos clientes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="problem-section" id="problema">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">O problema</div>
+      <h2 class="section-title">Você reconhece alguma dessas situações?</h2>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-item">
+        <div class="problem-item-icon"><i class="ti ti-chart-bar-off" aria-hidden="true"></i></div>
+        <h3>Não tenho tempo para postar</h3>
+        <p>Não tenho tempo para gravar nem sei qual a melhor forma de fazer vídeos e fotos que vendam.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-item-icon"><i class="ti ti-eye-off" aria-hidden="true"></i></div>
+        <h3>Invisível para quem importa</h3>
+        <p>Seu negócio não aparece quando o cliente ideal está procurando exatamente o que você oferece.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-item-icon"><i class="ti ti-messages-off" aria-hidden="true"></i></div>
+        <h3>Sem estratégia real</h3>
+        <p>Você copia o que vê nos concorrentes, mas sem uma base estratégica por trás, nada se sustenta.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-item-icon"><i class="ti ti-clock-off" aria-hidden="true"></i></div>
+        <h3>Sem tempo para tudo</h3>
+        <p>Gerir o negócio e ainda cuidar do marketing sozinho é impossível. Algo fica sempre para depois.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">O que fazemos</div>
+      <h2 class="section-title">Serviços que geram resultado</h2>
+      <p class="section-sub">Cada serviço é construído em cima de estratégia — não de improviso.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3>Gestão de Redes Sociais</h3>
+        <p>Estratégia editorial, produção de conteúdo, calendário, publicação e análise de performance. Tudo feito para atrair e converter.</p>
+        <div class="service-tags">
+          <span class="tag">Instagram</span>
+          <span class="tag">Facebook</span>
+          <span class="tag">TikTok</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3>Branding & Identidade Visual</h3>
+        <p>Construção de marca com propósito: logo, paleta, tipografia e linguagem visual que comunica autoridade e atrai o cliente certo.</p>
+        <div class="service-tags">
+          <span class="tag">Logo</span>
+          <span class="tag">Identidade</span>
+          <span class="tag">Brand Voice</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3>Estratégia Digital</h3>
+        <p>Diagnóstico completo do seu negócio, posicionamento de mercado e plano de marketing executável. Do zero ao crescimento.</p>
+        <div class="service-tags">
+          <span class="tag">Planejamento</span>
+          <span class="tag">Posicionamento</span>
+          <span class="tag">KPIs</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <h3>Conteúdo & Copywriting</h3>
+        <p>Textos que vendem, roteiros que engajam, legendas que convertem. Comunicação afiada baseada em psicologia de vendas.</p>
+        <div class="service-tags">
+          <span class="tag">Copy</span>
+          <span class="tag">Roteiro</span>
+          <span class="tag">Feed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="cases" style="background:var(--gray)">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Casos reais</div>
+      <h2 class="section-title">Resultados que provam o método</h2>
+      <p class="section-sub">Negócios locais da Paraíba que transformaram sua presença digital com a Otymizze.</p>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-tag">Gastronomia · Branding + Conteúdo</div>
+        <h3>P'burguer</h3>
+        <p>Identidade visual, campanhas promocionais e produção de conteúdo em vídeo para hamburgueria local.</p>
+        <div class="case-metric">400K+</div>
+        <div class="case-metric-label">Impressões orgânicas</div>
+      </div>
+      <div class="case-card">
+        <div class="case-tag">Inovação Social · Estratégia + Plano</div>
+        <h3>Brejotech</h3>
+        <p>Plano de marketing institucional completo — posicionamento, audiência segmentada, estrutura editorial e roadmap de 6 meses.</p>
+        <div class="case-metric">6 meses</div>
+        <div class="case-metric-label">Roadmap estratégico entregue</div>
+      </div>
+      <div class="case-card">
+        <div class="case-tag">Varejo · Personas + Conteúdo</div>
+        <h3>Ana Perfumaria</h3>
+        <p>Criação de personas detalhadas, framework de conteúdo em 4 pilares e calendário editorial para datas estratégicas.</p>
+        <div class="case-metric">4 pilares</div>
+        <div class="case-metric-label">Framework editorial criado</div>
+      </div>
+      <div class="case-card">
+        <div class="case-tag">Turismo · Gestão Completa + Crescimento Orgânico</div>
+        <h3>Ninho Peregrino</h3>
+        <p>Gestão completa e desenvolvimento do perfil do hostel em Bananeiras — estratégia, conteúdo, identidade e execução do zero.</p>
+        <div class="case-metric">+2.000</div>
+        <div class="case-metric-label">Seguidores 100% orgânicos conquistados</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section id="processo">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Como trabalhamos</div>
+      <h2 class="section-title">Do diagnóstico ao resultado</h2>
+      <p class="section-sub">Um processo claro, sem surpresas. Você sabe exatamente o que acontece em cada etapa.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="process-step-num">01</div>
+        <h3>Diagnóstico</h3>
+        <p>Entendemos seu negócio, seu público, seus concorrentes e onde estão as oportunidades reais.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">02</div>
+        <h3>Estratégia</h3>
+        <p>Construímos um plano sob medida com posicionamento, canais, tom de voz e metas claras.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">03</div>
+        <h3>Execução</h3>
+        <p>Colocamos o plano em prática: conteúdo, publicação, campanhas e acompanhamento contínuo.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-step-num">04</div>
+        <h3>Análise & Otimização</h3>
+        <p>Medimos resultados, identificamos o que funciona e ajustamos para crescimento consistente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" style="background:var(--gray)">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-eyebrow">Quem somos</div>
+        <h2 class="section-title">Assessoria que respeita seu negócio — e entrega resultado.</h2>
+        <blockquote class="about-highlight">"Não vendemos seguidores. Vendemos crescimento real para negócios reais."</blockquote>
+        <p>A Otymizze é uma assessoria empresarial com foco em marketing sediada em Solânea, Paraíba. Nascemos da convicção de que pequenos negócios locais merecem o mesmo nível estratégico das grandes marcas.</p>
+        <p>Combinamos estratégia de posicionamento, psicologia de vendas e execução de conteúdo para transformar presença digital em resultado comercial mensurável.</p>
+        <a class="btn-primary" href="https://wa.me/5583988444454?text=Quero%20saber%20mais%20sobre%20a%20Otymizze" target="_blank" rel="noopener" style="margin-top:8px;display:inline-block">Falar com a equipe</a>
+      </div>
+      <div class="about-creds">
+        <div class="cred-item">
+          <div class="cred-icon"><i class="ti ti-school" aria-hidden="true"></i></div>
+          <div>
+            <div class="cred-title">Pós-graduação em Neuromarketing</div>
+            <div class="cred-desc">FAMEESP — aplicação de psicologia do comportamento em estratégia de marketing</div>
+          </div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon"><i class="ti ti-building" aria-hidden="true"></i></div>
+          <div>
+            <div class="cred-title">Graduação em Administração</div>
+            <div class="cred-desc">UFPB — base sólida em gestão de negócios e análise estratégica</div>
+          </div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
+          <div>
+            <div class="cred-title">Raízes locais, visão ampla</div>
+            <div class="cred-desc">Baseados em Solânea-PB, atendemos negócios em toda a região com presença próxima e estratégia de mercado nacional</div>
+          </div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon"><i class="ti ti-video" aria-hidden="true"></i></div>
+          <div>
+            <div class="cred-title">Produção audiovisual orientada a resultado</div>
+            <div class="cred-desc">Não fazemos apenas vídeos e posts bonitos. Por trás de cada peça existe uma estratégia de conversão — construída para gerar seguidores, engajamento e vendas reais.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Dúvidas comuns</div>
+      <h2 class="section-title">Antes de falar com a gente</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Meu negócio é pequeno. Vale a pena ter uma assessoria de marketing?</div>
+        <div class="faq-a">Exatamente por isso vale. Negócios pequenos perdem muito por não ter estratégia — cada real investido sem direção é desperdício. Com assessoria, você gasta menos e acerta mais.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Vocês fazem a gestão completa ou só assessoria estratégica?</div>
+        <div class="faq-a">Oferecemos ambos. Podemos criar a estratégia e você executar internamente, ou assumimos a gestão completa das suas redes. Discutimos o modelo na conversa inicial.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Em quanto tempo vejo resultados?</div>
+        <div class="faq-a">Depende do estado atual e dos objetivos. Em geral, os primeiros resultados de engajamento aparecem em 30 a 60 dias. Crescimento sustentável começa a se consolidar a partir do terceiro mês.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Como funciona o diagnóstico gratuito?</div>
+        <div class="faq-a">É uma conversa de 30 minutos pelo WhatsApp ou videochamada. Analisamos sua presença digital atual, entendemos seus objetivos e apontamos as principais oportunidades — sem compromisso de contratação.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Atendem fora de Solânea e da Paraíba?</div>
+        <div class="faq-a">Sim. Somos uma assessoria empresarial e atendemos em todo o território nacional. Para clientes próximos, fazemos o acompanhamento presencial de perto — para os demais, trabalhamos de forma remota com o mesmo nível de dedicação e resultado.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <div class="container">
+    <div class="section-eyebrow" style="justify-content:center">Próximo passo</div>
+    <h2>Pronto para parar de<br>postar no escuro?</h2>
+    <p>Diagnóstico gratuito, sem enrolação. 30 minutos e você já sabe o que precisa mudar.</p>
+    <a class="cta-wpp" href="https://wa.me/5583988444454?text=Olá!%20Quero%20um%20diagnóstico%20gratuito%20para%20meu%20negócio" target="_blank" rel="noopener">
+      <i class="ti ti-brand-whatsapp" style="font-size:22px" aria-hidden="true"></i>
+      Quero meu diagnóstico gratuito
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#inicio" class="footer-logo"><img src="assets/logo.png" alt="Otymizze"></a>
+  <div class="footer-copy">© 2025 Otymizze Assessoria Empresarial. Solânea, Paraíba.</div>
+  <div class="footer-links">
+    <a class="footer-link" href="planos.html">Planos</a>
+    <a class="footer-link" href="https://instagram.com/otymizze" target="_blank" rel="noopener">Instagram</a>
+    <a class="footer-link" href="https://wa.me/5583988444454" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</footer>
+
+<!-- BOTÃO FLUTUANTE WHATSAPP -->
+<a class="wpp-float" href="https://wa.me/5583988444454?text=Olá!%20Vim%20pelo%20site%20e%20quero%20saber%20mais" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <i class="ti ti-brand-whatsapp" aria-hidden="true"></i>
+</a>
+
+</body>
+</html>
