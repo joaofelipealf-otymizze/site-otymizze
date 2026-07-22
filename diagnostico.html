@@ -439,26 +439,25 @@ async function openAdmin(){
     
     out.value = leads.length
       ? leads.map(l => {
-          const rawDate = l.created_at || l.createdAt;
-          let formattedDate = 'Sem data';
+          const rawDate = l.created_at || l.createdAt || 'Sem data';
+          let formattedDate = rawDate;
 
-          if (rawDate && typeof rawDate === 'string') {
-            if (rawDate.includes(' ')) {
+          if (typeof rawDate === 'string' && rawDate !== 'Sem data') {
+            // Trata o formato vindo da API "22/07/2026, 06:06:56"
+            if (rawDate.includes(',')) {
+              const parts = rawDate.split(',');
+              const dataPart = parts[0].trim();
+              const horaPart = parts[1].trim().substring(0, 5);
+              formattedDate = `${dataPart} às ${horaPart}`;
+            } 
+            // Trata o formato alternativo com traço "2026-07-22 06:06:56"
+            else if (rawDate.includes('-')) {
               const parts = rawDate.split(' ');
               const dateParts = parts[0].split('-');
-              const timeParts = parts[1].split(':');
+              const timeParts = (parts[1] || '').split(':');
               if (dateParts.length === 3) {
                 formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]} às ${timeParts[0]}:${timeParts[1]}`;
               }
-            } else if (rawDate.includes('T')) {
-              const parts = rawDate.split('T');
-              const dateParts = parts[0].split('-');
-              const timeParts = parts[1].split(':');
-              if (dateParts.length === 3) {
-                formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]} às ${timeParts[0]}:${timeParts[1]}`;
-              }
-            } else {
-              formattedDate = rawDate;
             }
           }
 
