@@ -1,9 +1,5 @@
 // Cloudflare Pages Function
-// Rota automática: /api/leads (por causa do caminho functions/api/leads.js)
-// Precisa de um binding D1 chamado "DB" configurado no painel do Cloudflare Pages
-// (Settings > Functions > D1 database bindings)
-// Precisa de uma variável de ambiente ADMIN_CODE configurada no painel
-// (Settings > Environment variables)
+// Rota automática: /api/leads
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -24,11 +20,14 @@ export async function onRequestPost(context) {
     return Response.json({ error: "Dados inválidos." }, { status: 400 });
   }
 
+  // Gera o timestamp ISO atual para garantir que nunca fique nulo no D1
+  const now = new Date().toISOString();
+
   const result = await env.DB
     .prepare(
-      "INSERT INTO leads (name, phone, score, plan) VALUES (?, ?, ?, ?) RETURNING *"
+      "INSERT INTO leads (name, phone, score, plan, created_at) VALUES (?, ?, ?, ?, ?) RETURNING *"
     )
-    .bind(name, phone, score, plan)
+    .bind(name, phone, score, plan, now)
     .first();
 
   return Response.json(result, { status: 201 });
@@ -45,13 +44,27 @@ export async function onRequestGet(context) {
   }
 
   const { results } = await env.DB
-    .prepare("SELECT * FROM leads ORDER BY created_at DESC")
+    .prepare("SELECT * FROM leads ORDER BY id DESC")
     .all();
 
-  const formatted = results.map((row) => ({
-    ...row,
-    created_at: new Date(row.created_at + "Z").toLocaleString("pt-BR"),
-  }));
+  const formatted = results.map((row) => {
+    let formattedDate = "Sem data";
+    
+    if (row.created_at) {
+      const parsed = new Date(row.created_at);
+      if (!isNaN(parsed.getTime())) {
+        formattedDate = parsed.toLocaleString("pt-BR", { timeZone: "America/Fortaleza" });
+      } else {
+        formattedDate = row.created_at;
+      }
+    }
+
+    return {
+      ...row,
+      createdAt: formattedDate,
+      created_at: formattedDate
+    };
+  });
 
   return Response.json(formatted);
 }
