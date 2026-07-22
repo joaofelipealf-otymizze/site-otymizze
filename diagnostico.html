@@ -427,47 +427,38 @@ function formatLeadDate(item) {
   if (!str) return 'Sem data';
 
   try {
-    let year, month, day, hours, minutes;
+    let dateObj;
 
-    // Caso 1: Formato "22/07/2026, 06:06:56"
+    // Normalização para parsing confiável
     if (str.includes('/')) {
       const parts = str.split(/[\s,]+/);
       const dParts = parts[0].split('/');
-      const tParts = (parts[1] || '00:00').split(':');
-      day = parseInt(dParts[0], 10);
-      month = parseInt(dParts[1], 10) - 1;
-      year = parseInt(dParts[2], 10);
-      hours = parseInt(tParts[0], 10);
-      minutes = parseInt(tParts[1], 10);
-    } 
-    // Caso 2: Formato SQL / ISO "2026-07-22 06:06:56"
-    else if (str.includes('-')) {
-      const cleanStr = str.replace('T', ' ');
-      const parts = cleanStr.split(' ');
-      const dParts = parts[0].split('-');
-      const tParts = (parts[1] || '00:00').split(':');
-      year = parseInt(dParts[0], 10);
-      month = parseInt(dParts[1], 10) - 1;
-      day = parseInt(dParts[2], 10);
-      hours = parseInt(tParts[0], 10);
-      minutes = parseInt(tParts[1], 10);
+      const tParts = (parts[1] || '00:00:00').split(':');
+      // ISO YYYY-MM-DDTHH:mm:ssZ
+      dateObj = new Date(`${dParts[2]}-${dParts[1]}-${dParts[0]}T${tParts[0].padStart(2,'0')}:${tParts[1].padStart(2,'0')}:${(tParts[2]||'00').padStart(2,'0')}Z`);
+    } else if (str.includes('-')) {
+      let isoStr = str.replace(' ', 'T');
+      if (!isoStr.endsWith('Z') && !isoStr.includes('+')) {
+        isoStr += 'Z';
+      }
+      dateObj = new Date(isoStr);
     }
 
-    if (year && month !== undefined && day) {
-      // Cria a data no fuso UTC e reduz exatamente 3 horas (Horário de Brasília/Paraíba)
-      const dateUtc = new Date(Date.UTC(year, month, day, hours, minutes));
-      dateUtc.setUTCHours(dateUtc.getUTCHours() - 3);
-
-      const dStr = String(dateUtc.getUTCDate()).padStart(2, '0');
-      const mStr = String(dateUtc.getUTCMonth() + 1).padStart(2, '0');
-      const yStr = dateUtc.getUTCFullYear();
-      const hStr = String(dateUtc.getUTCHours()).padStart(2, '0');
-      const minStr = String(dateUtc.getUTCMinutes()).padStart(2, '0');
-
-      return `${dStr}/${mStr}/${yStr} às ${hStr}:${minStr}`;
+    if (dateObj && !isNaN(dateObj.getTime())) {
+      // Usa Intl oficial forçando o fuso da Paraíba (America/Fortaleza)
+      const formatter = new Intl.DateTimeFormat('pt-BR', {
+        timeZone: 'America/Fortaleza',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      });
+      return formatter.format(dateObj).replace(',', ' às');
     }
   } catch (e) {
-    // Fallback caso dê erro
+    // Fallback silencioso
   }
 
   return str;
