@@ -374,10 +374,16 @@ async function submitLead(e){
     await fetch(LEADS_API, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({name, phone, score: total, plan: PLANS[planKey].name})
+      body: JSON.stringify({
+        name, 
+        phone, 
+        score: total, 
+        plan: PLANS[planKey].name,
+        created_at: Date.now() // Timestamp absoluto em ms gerado pelo dispositivo do usuário
+      })
     });
   } catch(err) {
-    // Mostra resultado mesmo se falhar
+    // Mostra resultado mesmo se falhar a requisição
   } finally {
     btn.disabled = false;
   }
@@ -427,16 +433,22 @@ function formatLeadDate(item) {
   if (!str) return 'Sem data';
 
   try {
-    // Garante sufixo Z para forçar a API da Date a interpretar a entrada como UTC puro
-    let isoStr = str.includes(' ') ? str.replace(' ', 'T') : str;
-    if (!isoStr.endsWith('Z') && !isoStr.includes('+')) {
-      isoStr += 'Z';
+    let dateObj;
+
+    // 1. Suporte a Timestamps Unix em milissegundos (Formato Novo)
+    if (/^\d{10,}$/.test(str)) {
+      dateObj = new Date(Number(str));
+    } 
+    // 2. Fallback para registros antigos em formato ISO ou SQL texto
+    else {
+      let isoStr = str.includes(' ') ? str.replace(' ', 'T') : str;
+      if (!isoStr.endsWith('Z') && !isoStr.includes('+')) {
+        isoStr += 'Z';
+      }
+      dateObj = new Date(isoStr);
     }
 
-    const dateObj = new Date(isoStr);
-
-    if (!isNaN(dateObj.getTime())) {
-      // Converte rigorosamente para o fuso regional America/Fortaleza (UTC-3)
+    if (dateObj && !isNaN(dateObj.getTime())) {
       const formatter = new Intl.DateTimeFormat('pt-BR', {
         timeZone: 'America/Fortaleza',
         day: '2-digit',
