@@ -1,5 +1,5 @@
 // Cloudflare Pages Function
-// Rota automática: /api/leads
+// Rota: /api/leads
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -20,7 +20,7 @@ export async function onRequestPost(context) {
     return Response.json({ error: "Dados inválidos." }, { status: 400 });
   }
 
-  // Insere usando a função de data do próprio SQLite (D1)
+  // Grava o lead inserindo o timestamp nativo do D1/SQLite
   const result = await env.DB
     .prepare(
       "INSERT INTO leads (name, phone, score, plan, created_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP) RETURNING *"
@@ -41,11 +41,10 @@ export async function onRequestGet(context) {
     return Response.json({ error: "Código incorreto." }, { status: 401 });
   }
 
-  // Traz os dados puros diretamente da tabela do D1
+  // Busca todos os campos diretamente do D1 sem nenhuma mutação intermediária
   const { results } = await env.DB
-    .prepare("SELECT * FROM leads ORDER BY id DESC")
+    .prepare("SELECT id, name, phone, plan, score, created_at FROM leads ORDER BY id DESC")
     .all();
 
-  // Envia diretamente os objetos sem forçar conversão quebrando a Date no iOS
-  return Response.json(results);
+  return Response.json(results || []);
 }
