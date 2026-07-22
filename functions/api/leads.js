@@ -20,15 +20,18 @@ export async function onRequestPost(context) {
     return Response.json({ error: "Dados inválidos." }, { status: 400 });
   }
 
-  // Grava o lead inserindo o timestamp nativo do D1/SQLite
-  const result = await env.DB
-    .prepare(
-      "INSERT INTO leads (name, phone, score, plan, created_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP) RETURNING *"
-    )
-    .bind(name, phone, score, plan)
-    .first();
+  try {
+    // Insere os dados de forma limpa usando a hora ISO atual do sistema
+    const now = new Date().toISOString();
+    const result = await env.DB
+      .prepare("INSERT INTO leads (name, phone, score, plan, created_at) VALUES (?, ?, ?, ?, ?)")
+      .bind(name, phone, score, plan, now)
+      .run();
 
-  return Response.json(result, { status: 201 });
+    return Response.json({ success: true, result }, { status: 201 });
+  } catch (err) {
+    return Response.json({ error: "Erro ao salvar no banco", details: err.message }, { status: 500 });
+  }
 }
 
 export async function onRequestGet(context) {
@@ -41,10 +44,15 @@ export async function onRequestGet(context) {
     return Response.json({ error: "Código incorreto." }, { status: 401 });
   }
 
-  // Busca todos os campos diretamente do D1 sem nenhuma mutação intermediária
-  const { results } = await env.DB
-    .prepare("SELECT id, name, phone, plan, score, created_at FROM leads ORDER BY id DESC")
-    .all();
+  try {
+    // Busca simples no banco
+    const { results } = await env.DB
+      .prepare("SELECT * FROM leads ORDER BY id DESC")
+      .all();
 
-  return Response.json(results || []);
+    return Response.json(results || []);
+  } catch (err) {
+    // Retorna a mensagem exata do erro do banco se falhar em vez de tela branca
+    return Response.json({ error: "Erro na consulta do banco", details: err.message }, { status: 500 });
+  }
 }
