@@ -374,16 +374,10 @@ async function submitLead(e){
     await fetch(LEADS_API, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        name, 
-        phone, 
-        score: total, 
-        plan: PLANS[planKey].name,
-        created_at: Date.now() // Timestamp absoluto em ms gerado pelo dispositivo do usuário
-      })
+      body: JSON.stringify({name, phone, score: total, plan: PLANS[planKey].name})
     });
   } catch(err) {
-    // Mostra resultado mesmo se falhar a requisição
+    // Mostra resultado mesmo se falhar
   } finally {
     btn.disabled = false;
   }
@@ -432,36 +426,32 @@ function formatLeadDate(item) {
   let str = String(raw).trim();
   if (!str) return 'Sem data';
 
-  try {
-    let dateObj;
+  // Se for timestamp Unix numérico (ex: 1784698000000)
+  if (/^\d{10,}$/.test(str)) {
+    const d = new Date(Number(str));
+    const dia = String(d.getDate()).padStart(2, '0');
+    const mes = String(d.getMonth() + 1).padStart(2, '0');
+    const ano = d.getFullYear();
+    const hora = String(d.getHours()).padStart(2, '0');
+    const min = String(d.getMinutes()).padStart(2, '0');
+    return `${dia}/${mes}/${ano} às ${hora}:${min}`;
+  }
 
-    // 1. Suporte a Timestamps Unix em milissegundos (Formato Novo)
-    if (/^\d{10,}$/.test(str)) {
-      dateObj = new Date(Number(str));
-    } 
-    // 2. Fallback para registros antigos em formato ISO ou SQL texto
-    else {
-      let isoStr = str.includes(' ') ? str.replace(' ', 'T') : str;
-      if (!isoStr.endsWith('Z') && !isoStr.includes('+')) {
-        isoStr += 'Z';
-      }
-      dateObj = new Date(isoStr);
+  // Extração direta via regex para contornar limitações do Safari/iOS
+  const match = str.match(/(\d{4})[-/](\d{2})[-/](\d{2})[T\s](\d{2}):(\d{2})/);
+  if (match) {
+    let [_, ano, mes, dia, horaUTC, min] = match;
+    
+    // Desconto de 3 horas em relação ao UTC (Horário da Paraíba / UTC-3)
+    let horaLocal = parseInt(horaUTC, 10) - 3;
+    
+    if (horaLocal < 0) {
+      horaLocal += 24;
+      dia = String(parseInt(dia, 10) - 1).padStart(2, '0');
     }
 
-    if (dateObj && !isNaN(dateObj.getTime())) {
-      const formatter = new Intl.DateTimeFormat('pt-BR', {
-        timeZone: 'America/Fortaleza',
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-      });
-      return formatter.format(dateObj).replace(',', ' às');
-    }
-  } catch (e) {
-    // Fallback silencioso
+    const horaFormatada = String(horaLocal).padStart(2, '0');
+    return `${dia}/${mes}/${ano} às ${horaFormatada}:${min}`;
   }
 
   return str;
