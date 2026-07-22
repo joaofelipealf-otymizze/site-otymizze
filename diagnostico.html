@@ -427,28 +427,47 @@ function formatLeadDate(item) {
   if (!str) return 'Sem data';
 
   try {
-    // Garante interpretação do fuso horário UTC vindo do SQLite/D1
-    let isoString = str;
-    if (str.includes(' ')) {
-      isoString = str.replace(' ', 'T') + 'Z';
-    } else if (!str.endsWith('Z') && !str.includes('+')) {
-      isoString = str + 'Z';
+    let year, month, day, hours, minutes;
+
+    // Caso 1: Formato "22/07/2026, 06:06:56"
+    if (str.includes('/')) {
+      const parts = str.split(/[\s,]+/);
+      const dParts = parts[0].split('/');
+      const tParts = (parts[1] || '00:00').split(':');
+      day = parseInt(dParts[0], 10);
+      month = parseInt(dParts[1], 10) - 1;
+      year = parseInt(dParts[2], 10);
+      hours = parseInt(tParts[0], 10);
+      minutes = parseInt(tParts[1], 10);
+    } 
+    // Caso 2: Formato SQL / ISO "2026-07-22 06:06:56"
+    else if (str.includes('-')) {
+      const cleanStr = str.replace('T', ' ');
+      const parts = cleanStr.split(' ');
+      const dParts = parts[0].split('-');
+      const tParts = (parts[1] || '00:00').split(':');
+      year = parseInt(dParts[0], 10);
+      month = parseInt(dParts[1], 10) - 1;
+      day = parseInt(dParts[2], 10);
+      hours = parseInt(tParts[0], 10);
+      minutes = parseInt(tParts[1], 10);
     }
 
-    const dateObj = new Date(isoString);
-    if (!isNaN(dateObj.getTime())) {
-      // Converte rigorosamente para o fuso local da Paraíba (America/Fortaleza)
-      return dateObj.toLocaleString('pt-BR', {
-        timeZone: 'America/Fortaleza',
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      }).replace(',', ' às');
+    if (year && month !== undefined && day) {
+      // Cria a data no fuso UTC e reduz exatamente 3 horas (Horário de Brasília/Paraíba)
+      const dateUtc = new Date(Date.UTC(year, month, day, hours, minutes));
+      dateUtc.setUTCHours(dateUtc.getUTCHours() - 3);
+
+      const dStr = String(dateUtc.getUTCDate()).padStart(2, '0');
+      const mStr = String(dateUtc.getUTCMonth() + 1).padStart(2, '0');
+      const yStr = dateUtc.getUTCFullYear();
+      const hStr = String(dateUtc.getUTCHours()).padStart(2, '0');
+      const minStr = String(dateUtc.getUTCMinutes()).padStart(2, '0');
+
+      return `${dStr}/${mStr}/${yStr} às ${hStr}:${minStr}`;
     }
   } catch (e) {
-    // Se falhar a conversão de objeto, segue pro tratamento direto de string
+    // Fallback caso dê erro
   }
 
   return str;
