@@ -6,5 +6,12 @@
     "directory": "./",
     "binding": "ASSETS",
     "not_found_handling": "404-page"
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "otymizze-leads",
+      "database_id": "5ab91112-c09d-4e52-bd16-c44ec5eeff76"
+    }
+  ]
 }
