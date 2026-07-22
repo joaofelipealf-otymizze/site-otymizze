@@ -436,8 +436,28 @@ async function openAdmin(){
     }
     if(!res.ok) throw new Error('Falha ao carregar leads');
     const leads = await res.json();
+    
     out.value = leads.length
-      ? leads.map(l => `${l.createdAt} | ${l.name} | ${l.phone} | ${l.plan} (score ${l.score})`).join('\n')
+      ? leads.map(l => {
+          const rawDate = l.created_at || l.createdAt || l.date || l.created;
+          
+          let formattedDate = 'Sem data';
+          if (rawDate) {
+            const parsed = new Date(rawDate);
+            if (!isNaN(parsed.getTime())) {
+              formattedDate = parsed.toLocaleString('pt-BR', { timeZone: 'America/Fortaleza' });
+            } else {
+              formattedDate = rawDate;
+            }
+          }
+
+          const name = l.name || l.nome || 'Sem nome';
+          const phone = l.phone || l.whatsapp || '';
+          const plan = l.plan || l.plano || '';
+          const score = l.score !== undefined ? l.score : '-';
+
+          return `${formattedDate} | ${name} | ${phone} | ${plan} (score ${score})`;
+        }).join('\n')
       : 'Nenhum lead capturado ainda.';
   } catch(err) {
     out.value = 'Erro ao carregar leads. Tente novamente.';
