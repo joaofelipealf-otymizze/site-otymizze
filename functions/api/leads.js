@@ -15,6 +15,8 @@ export async function onRequestPost(context) {
   const phone = typeof body.phone === "string" ? body.phone.trim() : "";
   const plan = typeof body.plan === "string" ? body.plan.trim() : "";
   const score = Number(body.score);
+  // Usa o timestamp em ms enviado pelo front; se ausente, gera um novo
+  const createdAt = body.created_at ? String(body.created_at) : String(Date.now());
 
   if (!name || !phone || !plan || !Number.isFinite(score)) {
     return Response.json({ error: "Dados inválidos." }, { status: 400 });
@@ -22,8 +24,8 @@ export async function onRequestPost(context) {
 
   try {
     const result = await env.DB
-      .prepare("INSERT INTO leads (name, phone, score, plan, created_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP) RETURNING *")
-      .bind(name, phone, score, plan)
+      .prepare("INSERT INTO leads (name, phone, score, plan, created_at) VALUES (?, ?, ?, ?, ?) RETURNING *")
+      .bind(name, phone, score, plan, createdAt)
       .first();
 
     return Response.json(result, { status: 201 });
@@ -43,22 +45,8 @@ export async function onRequestGet(context) {
   }
 
   try {
-    // Força o SQLite a concatenar o 'Z' no final da string para declarar fuso UTC
     const { results } = await env.DB
-      .prepare(`
-        SELECT 
-          id, 
-          name, 
-          phone, 
-          plan, 
-          score, 
-          CASE 
-            WHEN created_at IS NOT NULL AND created_at != '' THEN replace(created_at, ' ', 'T') || 'Z'
-            ELSE NULL 
-          END AS created_at
-        FROM leads 
-        ORDER BY id DESC
-      `)
+      .prepare("SELECT id, name, phone, plan, score, created_at FROM leads ORDER BY id DESC")
       .all();
 
     return new Response(JSON.stringify(results || []), {
