@@ -21,16 +21,14 @@ export async function onRequestPost(context) {
   }
 
   try {
-    // Insere os dados de forma limpa usando a hora ISO atual do sistema
-    const now = new Date().toISOString();
     const result = await env.DB
-      .prepare("INSERT INTO leads (name, phone, score, plan, created_at) VALUES (?, ?, ?, ?, ?)")
-      .bind(name, phone, score, plan, now)
-      .run();
+      .prepare("INSERT INTO leads (name, phone, score, plan, created_at) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP) RETURNING *")
+      .bind(name, phone, score, plan)
+      .first();
 
-    return Response.json({ success: true, result }, { status: 201 });
+    return Response.json(result, { status: 201 });
   } catch (err) {
-    return Response.json({ error: "Erro ao salvar no banco", details: err.message }, { status: 500 });
+    return Response.json({ error: "Erro ao salvar lead", details: err.message }, { status: 500 });
   }
 }
 
@@ -45,14 +43,28 @@ export async function onRequestGet(context) {
   }
 
   try {
-    // Busca simples no banco
+    // Força o SQLite a concatenar o 'Z' no final da string para declarar fuso UTC
     const { results } = await env.DB
-      .prepare("SELECT * FROM leads ORDER BY id DESC")
+      .prepare(`
+        SELECT 
+          id, 
+          name, 
+          phone, 
+          plan, 
+          score, 
+          CASE 
+            WHEN created_at IS NOT NULL AND created_at != '' THEN replace(created_at, ' ', 'T') || 'Z'
+            ELSE NULL 
+          END AS created_at
+        FROM leads 
+        ORDER BY id DESC
+      `)
       .all();
 
-    return Response.json(results || []);
+    return new Response(JSON.stringify(results || []), {
+      headers: { "Content-Type": "application/json; charset=utf-8" }
+    });
   } catch (err) {
-    // Retorna a mensagem exata do erro do banco se falhar em vez de tela branca
     return Response.json({ error: "Erro na consulta do banco", details: err.message }, { status: 500 });
   }
 }
