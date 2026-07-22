@@ -377,7 +377,7 @@ async function submitLead(e){
       body: JSON.stringify({name, phone, score: total, plan: PLANS[planKey].name})
     });
   } catch(err) {
-    // Ainda mostramos o resultado mesmo se o registro do lead falhar.
+    // Mostra resultado mesmo se falhar
   } finally {
     btn.disabled = false;
   }
@@ -419,6 +419,42 @@ function restart(){
   goTo(0);
 }
 
+function formatLeadDate(item) {
+  // Procura a chave de data em qualquer variação possível do D1/API
+  const raw = item.created_at || item.createdAt || item.date || item.created || item.timestamp;
+  if (!raw) return 'Sem data';
+
+  const str = String(raw).trim();
+  if (!str) return 'Sem data';
+
+  // 1. Formato "22/07/2026, 06:06:56" ou "22/07/2026 06:06:56"
+  if (str.includes('/')) {
+    const parts = str.split(/[\s,]+/);
+    const dataPart = parts[0];
+    const horaPart = parts[1] ? parts[1].substring(0, 5) : '';
+    return horaPart ? `${dataPart} às ${horaPart}` : dataPart;
+  }
+
+  // 2. Formato ISO ou SQL "2026-07-22 05:30:25" / "2026-07-22T05:30:25.000Z"
+  if (str.includes('-')) {
+    const cleanStr = str.replace('T', ' ');
+    const parts = cleanStr.split(' ');
+    const dateParts = parts[0].split('-');
+    const timeParts = (parts[1] || '').split(':');
+
+    if (dateParts.length === 3) {
+      const dia = dateParts[2].substring(0, 2);
+      const mes = dateParts[1];
+      const ano = dateParts[0];
+      const hora = timeParts[0] || '00';
+      const min = timeParts[1] || '00';
+      return `${dia}/${mes}/${ano} às ${hora}:${min}`;
+    }
+  }
+
+  return str;
+}
+
 async function openAdmin(){
   const code = prompt("Código de acesso:");
   if(code === null) return;
@@ -439,34 +475,13 @@ async function openAdmin(){
     
     out.value = leads.length
       ? leads.map(l => {
-          const rawDate = l.created_at || l.createdAt || 'Sem data';
-          let formattedDate = rawDate;
-
-          if (typeof rawDate === 'string' && rawDate !== 'Sem data') {
-            // Trata o formato vindo da API "22/07/2026, 06:06:56"
-            if (rawDate.includes(',')) {
-              const parts = rawDate.split(',');
-              const dataPart = parts[0].trim();
-              const horaPart = parts[1].trim().substring(0, 5);
-              formattedDate = `${dataPart} às ${horaPart}`;
-            } 
-            // Trata o formato alternativo com traço "2026-07-22 06:06:56"
-            else if (rawDate.includes('-')) {
-              const parts = rawDate.split(' ');
-              const dateParts = parts[0].split('-');
-              const timeParts = (parts[1] || '').split(':');
-              if (dateParts.length === 3) {
-                formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]} às ${timeParts[0]}:${timeParts[1]}`;
-              }
-            }
-          }
-
+          const dateStr = formatLeadDate(l);
           const name = l.name || l.nome || 'Sem nome';
           const phone = l.phone || l.whatsapp || '';
           const plan = l.plan || l.plano || '';
           const score = l.score !== undefined ? l.score : '-';
 
-          return `${formattedDate} | ${name} | ${phone} | ${plan} (score ${score})`;
+          return `${dateStr} | ${name} | ${phone} | ${plan} (score ${score})`;
         }).join('\n')
       : 'Nenhum lead capturado ainda.';
   } catch(err) {
