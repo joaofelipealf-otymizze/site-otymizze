@@ -1,0 +1,239 @@
+/* ========================================================
+   OTYMIZZE BLOG — folha de estilo compartilhada
+   Paleta: preto / carvão / off-white / dourado
+   Tipografia: Cormorant Garamond (display) + Montserrat (corpo)
+   ======================================================== */
+
+:root {
+  --oz-black: #0d0d0d;
+  --oz-charcoal: #1c1b19;
+  --oz-charcoal-2: #262421;
+  --oz-off-white: #f4f1ea;
+  --oz-gold: #c9a961;
+  --oz-gold-dim: #a3874f;
+  --oz-line: rgba(244, 241, 234, 0.12);
+  --oz-text-dim: rgba(244, 241, 234, 0.68);
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Montserrat", -apple-system, Segoe UI, sans-serif;
+
+  --maxw: 880px;
+}
+
+* { box-sizing: border-box; }
+
+body.oz-blog {
+  margin: 0;
+  background: var(--oz-black);
+  color: var(--oz-off-white);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.oz-blog a { color: var(--oz-gold); text-decoration: none; }
+.oz-blog a:hover { text-decoration: underline; }
+.oz-blog a:focus-visible,
+.oz-blog button:focus-visible { outline: 2px solid var(--oz-gold); outline-offset: 3px; }
+
+/* ---- Header / breadcrumb ---- */
+.oz-blog-header {
+  border-bottom: 1px solid var(--oz-line);
+  padding: 28px 24px;
+}
+.oz-blog-header .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.oz-logo-img {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+.oz-breadcrumb {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--oz-text-dim);
+}
+.oz-breadcrumb a { color: var(--oz-text-dim); }
+
+/* ---- Hero / eyebrow ---- */
+.oz-eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--oz-gold);
+  margin-bottom: 14px;
+  display: block;
+}
+.oz-hero {
+  max-width: var(--maxw);
+  margin: 56px auto 40px;
+  padding: 0 24px;
+}
+.oz-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  line-height: 1.08;
+  margin: 0 0 18px;
+}
+.oz-hero p.lede {
+  font-size: 1.08rem;
+  color: var(--oz-text-dim);
+  max-width: 62ch;
+}
+
+/* ---- Post list (index.html) ---- */
+.oz-post-grid {
+  max-width: var(--maxw);
+  margin: 0 auto 80px;
+  padding: 0 24px;
+  display: grid;
+  gap: 1px;
+  background: var(--oz-line);
+  border-top: 1px solid var(--oz-line);
+  border-bottom: 1px solid var(--oz-line);
+}
+.oz-post-card {
+  background: var(--oz-black);
+  padding: 32px 8px;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 24px;
+  align-items: baseline;
+}
+.oz-post-date {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--oz-text-dim);
+}
+.oz-post-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+.oz-post-card h2 a { color: var(--oz-off-white); }
+.oz-post-card p {
+  color: var(--oz-text-dim);
+  font-size: 0.95rem;
+  margin: 0 0 10px;
+  max-width: 60ch;
+}
+.oz-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.oz-tag {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--oz-gold-dim);
+  border: 1px solid var(--oz-gold-dim);
+  padding: 3px 9px;
+  border-radius: 2px;
+}
+
+@media (max-width: 620px) {
+  .oz-post-card { grid-template-columns: 1fr; gap: 8px; }
+}
+
+/* ---- Article page ---- */
+.oz-article {
+  max-width: 680px;
+  margin: 0 auto 100px;
+  padding: 0 24px;
+}
+.oz-article .meta-row {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  color: var(--oz-text-dim);
+  font-size: 0.8rem;
+  margin-bottom: 34px;
+  border-bottom: 1px solid var(--oz-line);
+  padding-bottom: 22px;
+}
+.oz-article h2 {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin: 44px 0 14px;
+  color: var(--oz-off-white);
+}
+.oz-article p {
+  font-size: 1.02rem;
+  color: rgba(244, 241, 234, 0.88);
+  margin: 0 0 20px;
+}
+.oz-article ul, .oz-article ol {
+  color: rgba(244, 241, 234, 0.88);
+  padding-left: 22px;
+}
+.oz-article li { margin-bottom: 8px; }
+.oz-article blockquote {
+  border-left: 3px solid var(--oz-gold);
+  margin: 32px 0;
+  padding: 4px 0 4px 22px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--oz-off-white);
+}
+
+/* ---- CTA (WhatsApp deep-link, padrão Otymizze) ---- */
+.oz-cta {
+  margin-top: 56px;
+  padding: 32px;
+  background: var(--oz-charcoal);
+  border: 1px solid var(--oz-line);
+  text-align: center;
+}
+.oz-cta h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin: 0 0 10px;
+}
+.oz-cta p { color: var(--oz-text-dim); margin: 0 0 20px; }
+.oz-cta-btn {
+  display: inline-block;
+  background: var(--oz-gold);
+  color: var(--oz-black) !important;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 14px 30px;
+  border-radius: 2px;
+  text-decoration: none !important;
+}
+.oz-cta-btn:hover { background: var(--oz-gold-dim); }
+
+/* ---- Related posts ---- */
+.oz-related {
+  max-width: 680px;
+  margin: 0 auto 90px;
+  padding: 0 24px;
+}
+.oz-related h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  border-top: 1px solid var(--oz-line);
+  padding-top: 28px;
+}
+.oz-related ul { list-style: none; padding: 0; }
+.oz-related li { margin-bottom: 10px; }
+
+/* ---- Footer ---- */
+.oz-blog-footer {
+  border-top: 1px solid var(--oz-line);
+  padding: 30px 24px;
+  text-align: center;
+  color: var(--oz-text-dim);
+  font-size: 0.78rem;
+}
