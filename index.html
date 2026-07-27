@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Otymizze — Assessoria Empresarial com foco em Marketing para pequenos negócios locais. Estratégia, gestão de redes sociais, branding e conteúdo que geram resultado real.">
+  <meta name="description" content="Otymizze — Assessoria Empresarial com foco em Marketing para pequenos e médios negócios. Estratégia, gestão de redes sociais, branding e conteúdo que geram resultado real.">
   <meta name="keywords" content="marketing digital, assessoria empresarial, marketing digital, redes sociais, branding, Paraíba, Solânea, pequenos negócios">
   <meta property="og:title" content="Otymizze — Marketing Digital que Converte">
   <meta property="og:description" content="Transformamos presença digital de pequenos negócios em resultado concreto. Diagnóstico gratuito.">
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="pt_BR">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/logo.png" type="image/png">
-  <title>Otymizze — Marketing Digital que Converte</title>
+  <title>Otymizze — Marketing que Converte</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Otymizze",
-    "description": "Assessoria Empresarial com foco em Marketing para pequenos negócios locais.",
+    "description": "Assessoria Empresarial com foco em Marketing para pequenos e médios negócios.",
     "url": "https://otymizze.com.br/",
     "image": "https://otymizze.com.br/assets/logo.png",
     "telephone": "+5583988444454",
@@ -351,6 +351,13 @@
     }
     .result-card figcaption{font-size:12.5px;color:rgba(245,243,238,0.64);letter-spacing:0.02em}
 
+    /* CLASSE PARA PRINTS QUE NÃO PODEM SER CORTADOS */
+    .proof-card.full-print img {
+      aspect-ratio: auto;
+      object-fit: contain;
+      background: #000;
+    }
+
     /* SCROLL REVEAL */
     .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease, transform 0.7s ease}
     .reveal.visible{opacity:1;transform:translateY(0)}
@@ -464,7 +471,7 @@
 <section class="hero" id="inicio">
   <div class="hero-inner" style="padding:0 48px">
     <div class="hero-eyebrow hero-fade" style="--d:0s">Assessoria Empresarial com foco em Marketing</div>
-    <h1 class="hero-fade" style="--d:0.12s">Seu negócio local<br>merece <em>crescer de verdade</em><br>nas redes sociais.</h1>
+    <h1 class="hero-fade" style="--d:0.12s">Seu empreendimento<br>merece <em>crescer de verdade</em><br>nas redes sociais.</h1>
     <p class="hero-sub hero-fade" style="--d:0.24s">A Otymizze transforma presença digital de pequenos negócios em resultados concretos — mais clientes, mais vendas, mais autoridade.</p>
     <div class="hero-ctas hero-fade" style="--d:0.36s">
       <a class="btn-primary" href="diagnostico.html">Diagnóstico gratuito →</a>
@@ -625,12 +632,18 @@
         <source src="assets/depoimentos/depoimento.mp4" type="video/mp4">
       </video>
       <div class="testimonial-info">
-        <div class="testimonial-name">[Nome do Cliente]</div>
-        <div class="testimonial-role">[Nome do Negócio]</div>
+        <div class="testimonial-name">Henrique</div>
+        <div class="testimonial-role">Hamburgueria P'Burguer</div>
       </div>
     </div>
 
     <div class="proof-grid">
+      <!-- PRINT DE INSIGHTS DE REEL (1) - MOVIDO PARA SER O PRIMEIRO E COM CLASSE 'full-print' -->
+      <figure class="proof-card result-card full-print">
+        <img src="assets/depoimentos/print-insights-reel.png" alt="Print de métricas de insights de Reel no Instagram">
+        <figcaption>Métricas orgânicas alcançadas: Insights de Reel no Instagram</figcaption>
+      </figure>
+
       <!-- PRINTS DE MENSAGENS (4) -->
       <figure class="proof-card result-card">
         <img src="assets/depoimentos/print-mensagem-1.png" alt="Print de mensagem - Feedback 1">
@@ -650,12 +663,6 @@
       <figure class="proof-card result-card">
         <img src="assets/depoimentos/print-mensagem-4.png" alt="Print de mensagem - Feedback 4">
         <figcaption>Feedback recebido de cliente</figcaption>
-      </figure>
-
-      <!-- PRINT DE INSIGHTS DE REEL (1) -->
-      <figure class="proof-card result-card">
-        <img src="assets/depoimentos/print-insights-reel.png" alt="Print de métricas de insights de Reel no Instagram">
-        <figcaption>Métricas orgânicas alcançadas: Insights de Reel no Instagram</figcaption>
       </figure>
     </div>
   </div>
