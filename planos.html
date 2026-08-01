@@ -257,6 +257,33 @@
   .trial-btn:hover{background:#e2e2e0}
   .trial-fine{font-size:11px;color:rgba(245,243,238,0.64);text-align:right;}
 
+  /* SERVIÇOS AVULSOS (À LA CARTE) */
+  .addon-section{padding:80px 48px 40px}
+  .addon-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px}
+  .addon-card{border:1px solid rgba(255,255,255,0.15);padding:28px 26px;display:flex;flex-direction:column;transition:border-color 0.3s}
+  .addon-card:hover{border-color:rgba(255,255,255,0.4)}
+  .addon-cat{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,243,238,0.45);margin-bottom:10px}
+  .addon-name{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;margin-bottom:8px}
+  .addon-desc{font-size:12.5px;color:rgba(245,243,238,0.65);line-height:1.65;margin-bottom:18px;flex:1}
+  .addon-price{display:flex;align-items:baseline;gap:6px;margin-bottom:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.1)}
+  .addon-price .from{font-size:11px;color:rgba(245,243,238,0.5);text-transform:uppercase;letter-spacing:0.04em}
+  .addon-price .num{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--white)}
+  .addon-price .unit{font-size:11.5px;color:rgba(245,243,238,0.5)}
+  .addon-card .btn-outline{text-align:center;font-size:11px;padding:11px 16px}
+
+  /* CAPACITAÇÃO / WORKSHOP */
+  .capacitacao-section{padding:80px 48px}
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+  .service-card{border:1px solid rgba(255,255,255,0.15);padding:40px 32px;transition:border-color 0.3s;position:relative;overflow:hidden}
+  .service-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--white);transition:height 0.3s}
+  .service-card:hover{border-color:rgba(255,255,255,0.4)}
+  .service-card:hover::before{height:100%}
+  .service-num{font-family:'Cormorant Garamond',serif;font-size:48px;color:rgba(255,255,255,0.15);line-height:1;margin-bottom:20px}
+  .service-card h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:12px}
+  .service-card p{font-size:13px;color:rgba(245,243,238,0.7);line-height:1.8}
+  .service-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px}
+  .tag{font-size:11px;letter-spacing:0.06em;border:1px solid rgba(255,255,255,0.3);color:rgba(245,243,238,0.64);padding:4px 10px}
+
   /* WHAT'S INCLUDED IN ALL */
   .included{background:rgba(255,255,255,0.03);padding:80px 48px;border-top:1px solid rgba(255,255,255,0.1);border-bottom:1px solid rgba(255,255,255,0.1);}
   .included-inner{max-width:1120px;margin:0 auto;}
@@ -350,7 +377,7 @@
     .nav-links, .nav-cta{display:none}
     .nav-toggle{display:block}
     .hero{padding-top:120px;padding-left:20px;padding-right:20px}
-    .plans, .included, .faq, .final-cta{padding-left:20px;padding-right:20px;}
+    .plans, .included, .faq, .final-cta, .addon-section, .capacitacao-section{padding-left:20px;padding-right:20px;}
     .trial-inner{flex-direction:column;align-items:flex-start;padding:24px;}
     .trial-cta{align-items:flex-start;}
     .trial-fine{text-align:left;}
@@ -385,6 +412,8 @@
       <li><a href="index.html#servicos">Serviços</a></li>
       <li><a href="index.html#cases">Cases</a></li>
       <li><a href="planos.html" class="active">Planos</a></li>
+      <li><a href="#avulso">Avulsos</a></li>
+      <li><a href="#capacitacao">Capacitação</a></li>
       <li><a href="index.html#sobre">Sobre</a></li>
       <li><a href="index.html#faq">FAQ</a></li>
     </ul>
@@ -401,6 +430,8 @@
   <a href="index.html#servicos">Serviços</a>
   <a href="index.html#cases">Cases</a>
   <a href="planos.html">Planos</a>
+  <a href="#avulso">Avulsos</a>
+  <a href="#capacitacao">Capacitação</a>
   <a href="index.html#sobre">Sobre</a>
   <a href="index.html#faq">FAQ</a>
   <a class="btn-primary" href="https://wa.me/5583988444454?text=Olá,%20vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20os%20planos%20da%20Otymizze" target="_blank" rel="noopener">Falar no WhatsApp</a>
@@ -411,9 +442,8 @@
     <span class="eyebrow hero-fade" style="--d:0s">Planos Otymizze</span>
     <h1 class="hero-fade" style="--d:0.12s">Escolha o nível de <em>presença</em> que o seu negócio precisa agora.</h1>
     <p class="hero-fade" style="--d:0.24s">Sem letra miúda. Cada plano mostra exatamente o que você recebe todo mês — do conteúdo à visita, do posicionamento ao resultado.</p>
-    <p class="hero-fade" style="margin-top:20px;--d:0.36s">
-      <a href="diagnostico.html" style="color:var(--white);text-decoration:underline;font-size:14px;">Não sabe qual plano faz sentido? Faça o diagnóstico gratuito →</a>
-    </p>
+    <p class="hero-fade" style="margin-top:28px;--d:0.36s;font-size:13.5px;color:rgba(245,243,238,0.65)">Não sabe qual plano faz sentido pro seu negócio?</p>
+    <a class="btn-outline hero-fade" style="--d:0.42s;margin-top:14px;display:inline-block" href="diagnostico.html">Fazer diagnóstico gratuito →</a>
   </div>
 </section>
 
@@ -510,6 +540,147 @@
       <a class="trial-btn" href="https://wa.me/5583988444454?text=Olá,%20quero%20saber%20mais%20sobre%20a%20condição%20de%20lançamento%20de%20R$490%20(30%20dias)" target="_blank" rel="noopener">Quero essa condição</a>
       <span class="trial-fine">Não sabe se é pra você? <a href="diagnostico.html" style="color:var(--white);text-decoration:underline;">Faça o diagnóstico</a></span>
     </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS AVULSOS -->
+<section class="addon-section wrap" id="avulso">
+  <div class="plans-head reveal">
+    <span class="eyebrow">Contrate só o que precisa</span>
+    <h2>Serviços individuais, com preço próprio</h2>
+    <p style="color:rgba(245,243,238,0.7);font-size:14px;line-height:1.7;margin-top:14px">Nem todo mundo precisa de um plano completo agora. Se o momento pede só uma coisa específica — um site, um plano de marketing, uma identidade visual — dá para contratar avulso.</p>
+  </div>
+  <div class="addon-grid reveal">
+
+    <div class="addon-card">
+      <div class="addon-cat">Consultoria Estratégica</div>
+      <div class="addon-name">Diagnóstico Completo</div>
+      <div class="addon-desc">Acompanhamento presencial ou remoto de um período do dia, mapeando gestão, logística, atendimento e marketing, com relatório de gargalos por escrito.</div>
+      <div class="addon-price"><span class="from">a partir de</span><span class="num">R$ 590</span><span class="unit">projeto único</span></div>
+      <a class="btn-outline" href="https://wa.me/5583988444454?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Diagnóstico%20Completo%20avulso" target="_blank" rel="noopener">Quero contratar</a>
+    </div>
+
+    <div class="addon-card">
+      <div class="addon-cat">Consultoria Estratégica</div>
+      <div class="addon-name">Precificação Estratégica</div>
+      <div class="addon-desc">Cálculo de margem e definição de preço de venda por produto ou serviço, com metodologia replicável entregue ao cliente.</div>
+      <div class="addon-price"><span class="from">a partir de</span><span class="num">R$ 290</span><span class="unit">por linha de produtos</span></div>
+      <a class="btn-outline" href="https://wa.me/5583988444454?text=Olá!%20Quero%20saber%20mais%20sobre%20a%20Precificação%20Estratégica%20avulsa" target="_blank" rel="noopener">Quero contratar</a>
+    </div>
+
+    <div class="addon-card">
+      <div class="addon-cat">Consultoria Estratégica</div>
+      <div class="addon-name">Plano de Marketing</div>
+      <div class="addon-desc">Documento com perfil de cliente, SWOT, canais e formatos prioritários, cronograma de ação e projeção de resultado.</div>
+      <div class="addon-price"><span class="from">a partir de</span><span class="num">R$ 1.490</span><span class="unit">projeto único</span></div>
+      <a class="btn-outline" href="https://wa.me/5583988444454?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Plano%20de%20Marketing%20avulso" target="_blank" rel="noopener">Quero contratar</a>
+    </div>
+
+    <div class="addon-card">
+      <div class="addon-cat">Consultoria Estratégica</div>
+      <div class="addon-name">Plano de Negócios Completo</div>
+      <div class="addon-desc">Documento que integra marketing, posicionamento e operação, com plano de ação de curto, médio e longo prazo. Topo da escada de consultoria.</div>
+      <div class="addon-price"><span class="from">a partir de</span><span class="num">R$ 2.890</span><span class="unit">projeto único</span></div>
+      <a class="btn-outline" href="https://wa.me/5583988444454?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Plano%20de%20Negócios%20Completo" target="_blank" rel="noopener">Quero contratar</a>
+    </div>
+
+    <div class="addon-card">
+      <div class="addon-cat">Marca e Posicionamento</div>
+      <div class="addon-name">Posicionamento de Marca</div>
+      <div class="addon-desc">Definição de linguagem, tom de voz e forma de comunicação, com documento-síntese aplicável no dia a dia.</div>
+      <div class="addon-price"><span class="from">a partir de</span><span class="num">R$ 990</span><span class="unit">projeto único</span></div>
+      <a class="btn-outline" href="https://wa.me/5583988444454?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Posicionamento%20de%20Marca%20avulso" target="_blank" rel="noopener">Quero contratar</a>
+    </div>
+
+    <div class="addon-card">
+      <div class="addon-cat">Marca e Posicionamento</div>
+      <div class="addon-name">Identidade Visual</div>
+      <div class="addon-desc">Logo, paleta de cores, tipografia e principais aplicações. Vendida junto ao Posicionamento para marca nova ou rebranding.</div>
+      <div class="addon-price"><span class="from">a partir de</span><span class="num">R$ 1.490</span><span class="unit">projeto único</span></div>
+      <a class="btn-outline" href="https://wa.me/5583988444454?text=Olá!%20Quero%20saber%20mais%20sobre%20a%20Identidade%20Visual" target="_blank" rel="noopener">Quero contratar</a>
+    </div>
+
+    <div class="addon-card">
+      <div class="addon-cat">Marca e Posicionamento</div>
+      <div class="addon-name">Visual Merchandising</div>
+      <div class="addon-desc">Diagnóstico da disposição dos produtos na loja física e recomendação de layout estratégico. Só para negócios com ponto de venda físico.</div>
+      <div class="addon-price"><span class="from">a partir de</span><span class="num">R$ 690</span><span class="unit">visita + relatório</span></div>
+      <a class="btn-outline" href="https://wa.me/5583988444454?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Visual%20Merchandising" target="_blank" rel="noopener">Quero contratar</a>
+    </div>
+
+    <div class="addon-card">
+      <div class="addon-cat">Presença Digital</div>
+      <div class="addon-name">Site Institucional</div>
+      <div class="addon-desc">Página única ou poucas páginas, em plataforma testada, com link direto para WhatsApp. Sem checkout nem integrações críticas.</div>
+      <div class="addon-price"><span class="from">a partir de</span><span class="num">R$ 1.890</span><span class="unit">projeto único</span></div>
+      <a class="btn-outline" href="https://wa.me/5583988444454?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Site%20Institucional" target="_blank" rel="noopener">Quero contratar</a>
+    </div>
+
+    <div class="addon-card">
+      <div class="addon-cat">Presença Digital</div>
+      <div class="addon-name">Vídeo Avulso</div>
+      <div class="addon-desc">Roteiro, captação e edição para uma demanda pontual (evento, lançamento, institucional), fora do volume de um plano.</div>
+      <div class="addon-price"><span class="from">a partir de</span><span class="num">R$ 390</span><span class="unit">por vídeo</span></div>
+      <a class="btn-outline" href="https://wa.me/5583988444454?text=Olá!%20Quero%20saber%20mais%20sobre%20a%20produção%20de%20vídeo%20avulso" target="_blank" rel="noopener">Quero contratar</a>
+    </div>
+
+    <div class="addon-card">
+      <div class="addon-cat">Presença Digital</div>
+      <div class="addon-name">Tráfego Pago (add-on)</div>
+      <div class="addon-desc">Gestão de campanhas em Meta Ads e Google Ads para clientes de qualquer plano. Verba de mídia sempre paga à parte pelo cliente.</div>
+      <div class="addon-price"><span class="from">a partir de</span><span class="num">R$ 490</span><span class="unit">/mês, mão de obra</span></div>
+      <a class="btn-outline" href="https://wa.me/5583988444454?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Tráfego%20Pago" target="_blank" rel="noopener">Quero contratar</a>
+    </div>
+
+    <div class="addon-card">
+      <div class="addon-cat">Capacitação (B2G/B2B)</div>
+      <div class="addon-name">Workshop Método MAR</div>
+      <div class="addon-desc">Módulo de Finanças, Marketing ou Mentalidade Empreendedora. Pacote com os 3 módulos disponível com condição especial.</div>
+      <div class="addon-price"><span class="from">a partir de</span><span class="num">R$ 890</span><span class="unit">por módulo</span></div>
+      <a class="btn-outline" href="https://wa.me/5583988444454?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20a%20capacita%C3%A7%C3%A3o%20da%20Otymizze%20para%20minha%20empresa%2Fequipe" target="_blank" rel="noopener">Quero contratar</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- CAPACITAÇÃO / WORKSHOP -->
+<section class="capacitacao-section wrap" id="capacitacao">
+  <div class="plans-head reveal">
+    <span class="eyebrow">Além dos planos</span>
+    <h2>Capacitação para equipes e empreendedores</h2>
+    <p style="color:rgba(245,243,238,0.7);font-size:14px;line-height:1.7;margin-top:14px">Workshops práticos sobre finanças, marketing e mentalidade empreendedora — para empresas, grupos de empreendedores locais e parcerias institucionais. Frente comercial separada dos planos de conteúdo, com proposta própria.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3>Finanças na Prática</h3>
+      <p>Fluxo de caixa, precificação e leitura de resultado para quem decide no dia a dia — sem depender de planilha complicada.</p>
+      <div class="service-tags">
+        <span class="tag">Fluxo de caixa</span>
+        <span class="tag">Precificação</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3>Marketing para Negócios Locais</h3>
+      <p>Gestão de canais, posicionamento e captação de clientes aplicados à realidade de quem vende no bairro, na cidade ou na região.</p>
+      <div class="service-tags">
+        <span class="tag">Redes sociais</span>
+        <span class="tag">Posicionamento</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3>Mentalidade Empreendedora</h3>
+      <p>Inovação, tomada de decisão e postura diante de um cenário que muda rápido — sem fórmula pronta, com aplicação real.</p>
+      <div class="service-tags">
+        <span class="tag">Inovação</span>
+        <span class="tag">Gestão</span>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:48px;text-align:center">
+    <a class="btn-outline" href="https://wa.me/5583988444454?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20a%20capacita%C3%A7%C3%A3o%20da%20Otymizze%20para%20minha%20empresa%2Fequipe" target="_blank" rel="noopener">Quero levar esse workshop →</a>
   </div>
 </section>
 
