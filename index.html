@@ -426,13 +426,6 @@
 </div>
 
 <div class="site-header" id="siteHeader">
-  <!-- BARRA DE URGÊNCIA -->
-  <div class="promo-bar" id="promoBar">
-    Vagas limitadas: comece com o <strong>Plano de Entrada por R$490</strong> —
-    <a href="planos.html">ver condições</a>
-    <button class="promo-bar-close" id="promoClose" aria-label="Fechar aviso">✕</button>
-  </div>
-
   <!-- NAVEGAÇÃO -->
   <nav>
     <a href="#inicio" class="nav-logo"><img src="assets/logo.png" alt="Otymizze"></a>
@@ -816,16 +809,9 @@
 </a>
 
 <script>
-  // Ajusta o espaço do hero conforme a altura real do cabeçalho fixo (barra + nav)
+  // Ajusta o espaço do hero conforme a altura real do cabeçalho fixo
   const siteHeader = document.getElementById('siteHeader');
   const hero = document.querySelector('.hero');
-  const promoBar = document.getElementById('promoBar');
-  const promoClose = document.getElementById('promoClose');
-  const PROMO_KEY = 'oz_promo_dismissed_at';
-  const dismissedAt = localStorage.getItem(PROMO_KEY);
-  if (dismissedAt && (Date.now() - Number(dismissedAt)) < 24 * 60 * 60 * 1000) {
-    promoBar.style.display = 'none';
-  }
 
   function syncHeaderHeight(){
     const h = siteHeader.offsetHeight;
@@ -853,13 +839,6 @@
   });
   menuOverlay.addEventListener('click', closeMenu);
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-
-  // Barra de urgência: fechar e lembrar por 24h (não incomoda quem já viu)
-  promoClose.addEventListener('click', () => {
-    promoBar.style.display = 'none';
-    localStorage.setItem(PROMO_KEY, Date.now().toString());
-    syncHeaderHeight();
-  });
 
   // Scroll reveal: aplica em títulos e cards automaticamente
   const revealTargets = document.querySelectorAll(
