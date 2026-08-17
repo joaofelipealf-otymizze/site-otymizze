@@ -398,13 +398,6 @@
 </div>
 
 <div class="site-header" id="siteHeader">
-  <!-- BARRA DE URGÊNCIA -->
-  <div class="promo-bar" id="promoBar">
-    Vagas limitadas: comece com o <strong>Plano de Entrada por R$490</strong> —
-    <a href="#trial">ver condições</a>
-    <button class="promo-bar-close" id="promoClose" aria-label="Fechar aviso">✕</button>
-  </div>
-
   <!-- NAVEGAÇÃO -->
   <nav>
     <a href="index.html" class="nav-logo"><img src="assets/logo.png" alt="Otymizze"></a>
@@ -526,21 +519,6 @@
   </div>
 
   <p class="note-strip reveal">Todos os planos incluem <strong>equipamento profissional próprio</strong> nas gravações e <strong>resposta em até 1 dia útil</strong> para dúvidas e ajustes.</p>
-</section>
-
-<section class="trial-banner wrap reveal" id="trial">
-  <div class="trial-inner">
-    <div class="trial-copy">
-      <span class="trial-eyebrow">Condição de lançamento · vagas limitadas</span>
-      <h3>Quer testar antes de assinar um plano cheio?</h3>
-      <p>30 dias de execução com a Otymizze por um valor de entrada. Ao final do período, o plano migra automaticamente para o Presença (R$890/mês) — ou você encerra, sem burocracia. Válida até <strong>31/08/2026</strong> ou enquanto houver vaga (máx. 3 por mês).</p>
-    </div>
-    <div class="trial-price"><span>R$</span><span class="amount">490</span></div>
-    <div class="trial-cta">
-      <a class="trial-btn" href="https://wa.me/5583988444454?text=Olá,%20quero%20saber%20mais%20sobre%20a%20condição%20de%20lançamento%20de%20R$490%20(30%20dias)" target="_blank" rel="noopener">Quero essa condição</a>
-      <span class="trial-fine">Não sabe se é pra você? <a href="diagnostico.html" style="color:var(--white);text-decoration:underline;">Faça o diagnóstico</a></span>
-    </div>
-  </div>
 </section>
 
 <!-- SERVIÇOS AVULSOS -->
@@ -767,16 +745,9 @@
 </a>
 
 <script>
-  // Ajusta o padding do hero e barra de urgência
+  // Ajusta o padding do hero conforme a altura do cabeçalho fixo
   const siteHeader = document.getElementById('siteHeader');
   const hero = document.querySelector('.hero');
-  const promoBar = document.getElementById('promoBar');
-  const promoClose = document.getElementById('promoClose');
-  const PROMO_KEY = 'oz_promo_dismissed_at';
-  
-  if (localStorage.getItem(PROMO_KEY)) {
-    promoBar.style.display = 'none';
-  }
 
   function syncHeaderHeight(){
     const h = siteHeader.offsetHeight;
@@ -786,12 +757,6 @@
   window.addEventListener('load', syncHeaderHeight);
   window.addEventListener('resize', syncHeaderHeight);
   syncHeaderHeight();
-
-  promoClose.addEventListener('click', () => {
-    promoBar.style.display = 'none';
-    localStorage.setItem(PROMO_KEY, 'true');
-    syncHeaderHeight();
-  });
 
   // Menu Mobile
   const navToggle = document.getElementById('navToggle');
