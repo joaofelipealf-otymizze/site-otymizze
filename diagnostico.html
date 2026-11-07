@@ -68,7 +68,7 @@
   }
 
   h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;}
-  
+
   .stage{
     width:100%;max-width:560px;
     background:rgba(58, 58, 56, 0.7); /* var(--gray) com opacidade para o glow vazar */
@@ -88,7 +88,7 @@
   .progress-wrap{display:flex;gap:6px;margin-bottom:32px;}
   .progress-seg{flex:1;height:3px;background:rgba(255,255,255,0.12);border-radius:2px;overflow:hidden;transition:background 0.3s ease;}
   .progress-seg.done{background:var(--white);}
-  
+
   .screen{display:none;}
   .screen.active{display:block;animation:fade .35s ease;}
   @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
@@ -184,7 +184,7 @@
   .admin-link:hover{color:rgba(255,255,255,0.5);}
   .admin-box{background:var(--black);color:var(--offwhite);border:1px solid rgba(255,255,255,0.2);padding:20px;margin-top:16px;}
   .admin-box textarea{width:100%;min-height:140px;background:rgba(255,255,255,0.05);font-family:monospace;font-size:0.78rem;padding:10px;border:none;border-top:1px solid rgba(255,255,255,0.1);margin-top:16px;color:var(--offwhite);outline:none;}
-  
+
   @media(max-width:500px){
     .stage{padding:32px 24px;}
   }
@@ -242,15 +242,6 @@
     <ul class="result-features" id="resultFeatures"></ul>
 
     <div class="bonus-note"><strong>Bônus:</strong> ao contratar, você ganha uma reunião visionária exclusiva pro seu negócio — um olhar que a maioria dos donos de negócio nunca teve sobre o próprio negócio.</div>
-
-    <div class="trial-block" id="trialBlock" style="display:none;">
-      <span class="trial-eyebrow">Condição de lançamento · vagas limitadas</span>
-      <p>Prefere testar antes? 30 dias de execução por um valor de entrada. Depois, migra automaticamente pro Plano Presença (R$890/mês) — ou você encerra, sem burocracia. Válida até 31/08/2026 ou enquanto houver vaga.</p>
-      <div class="trial-cta-line">
-        <span class="trial-amount">R$ 490</span>
-        <a class="btn-trial" id="trialWhatsapp" href="#" target="_blank">Quero essa condição</a>
-      </div>
-    </div>
 
     <a class="btn-whatsapp" id="resultWhatsapp" href="#" target="_blank">Falar com a equipe no WhatsApp</a>
     <div class="restart"><a onclick="restart()">Refazer diagnóstico</a></div>
@@ -445,15 +436,6 @@ function showResult(planKey, name){
   const msg = encodeURIComponent(`Olá! Sou ${name}, fiz o diagnóstico da Otymizze e o resultado indicou o ${plan.name} (R$${plan.amount}/mês). Quero conversar!`);
   document.getElementById('resultWhatsapp').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
 
-  const trialBlock = document.getElementById('trialBlock');
-  if(planKey === 'presenca'){
-    trialBlock.style.display = 'block';
-    const trialMsg = encodeURIComponent(`Olá! Sou ${name}, fiz o diagnóstico da Otymizze e quero saber mais sobre a condição de lançamento de R$490 (30 dias).`);
-    document.getElementById('trialWhatsapp').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${trialMsg}`;
-  } else {
-    trialBlock.style.display = 'none';
-  }
-
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.querySelector('[data-screen="result"]').classList.add('active');
 }
@@ -490,10 +472,10 @@ function formatLeadDate(item) {
   const match = str.match(/(\d{4})[-/](\d{2})[-/](\d{2})[T\s](\d{2}):(\d{2})/);
   if (match) {
     let [_, ano, mes, dia, horaUTC, min] = match;
-    
+
     // Desconto de 3 horas em relação ao UTC (Horário da Paraíba / UTC-3)
     let horaLocal = parseInt(horaUTC, 10) - 3;
-    
+
     if (horaLocal < 0) {
       horaLocal += 24;
       dia = String(parseInt(dia, 10) - 1).padStart(2, '0');
@@ -523,7 +505,7 @@ async function openAdmin(){
     }
     if(!res.ok) throw new Error('Falha ao carregar leads');
     const leads = await res.json();
-    
+
     out.value = leads.length
       ? leads.map(l => {
           const dateStr = formatLeadDate(l);
